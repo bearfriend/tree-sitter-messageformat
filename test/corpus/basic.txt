@@ -1,0 +1,179 @@
+================================================================================
+Simple key-value pair
+================================================================================
+
+greeting: "Hello World!"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string (string_content))))
+
+================================================================================
+Basic placeholder
+================================================================================
+
+message: "Hello {name}!"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (string_content)
+    (placeholder (identifier))
+    (string_content))))
+
+================================================================================
+Comment
+================================================================================
+
+// This is a comment
+greeting: "Hello!"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (key (identifier))
+  (value (quoted_string (string_content))))
+
+================================================================================
+Multiple entries with comma
+================================================================================
+
+greeting: "Hello!",
+farewell: "Goodbye!"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string (string_content)))
+  (key (identifier))
+  (value (quoted_string (string_content))))
+
+================================================================================
+Simple plural
+================================================================================
+
+items: "{count, plural, =0 {no items} other {# items}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (complex_message
+      (identifier)
+      (message_type)
+      (format_spec (plural_rules
+        (plural_case (plural_key (number)) (case_body (string_content)))
+        (plural_case (plural_key) (case_body (pound_placeholder) (string_content)))))))))
+
+================================================================================
+Simple select
+================================================================================
+
+gender: "{person, select, male {He} female {She} other {They}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (complex_message
+      (identifier)
+      (message_type)
+      (format_spec (select_rules
+        (select_case (select_key (identifier)) (case_body (string_content)))
+        (select_case (select_key (identifier)) (case_body (string_content)))
+        (select_case (select_key (identifier)) (case_body (string_content)))))))))
+
+================================================================================
+Number formatting with skeleton
+================================================================================
+
+price: "Cost: {amount, number, ::currency/USD}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (string_content)
+    (complex_message
+      (identifier)
+      (message_type)
+      (format_spec (skeleton_format (skeleton_pattern)))))))
+
+================================================================================
+Date formatting with skeleton
+================================================================================
+
+birthday: "Born on {date, date, ::MMM d, y}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (string_content)
+    (complex_message
+      (identifier)
+      (message_type)
+      (format_spec (skeleton_format (skeleton_pattern)))))))
+
+================================================================================
+Escaped characters
+================================================================================
+
+escaped: "Use '{' and '}' for braces"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (string_content)
+    (escaped_char (quoted_literal))
+    (string_content)
+    (escaped_char (quoted_literal))
+    (string_content))))
+
+================================================================================
+Template string
+================================================================================
+
+multiline: `Hello {name}!
+Welcome back.`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (template_string
+    (string_content)
+    (placeholder (identifier))
+    (string_content)
+    (string_content))))
+
+================================================================================
+Plural with offset
+================================================================================
+
+guests: "{count, plural, offset:1 =0 {no guests} other {# guests}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (complex_message
+      (identifier)
+      (message_type)
+      (format_spec (plural_rules
+        (offset (number))
+        (plural_case (plural_key (number)) (case_body (string_content)))
+        (plural_case (plural_key) (case_body (pound_placeholder) (string_content)))))))))
