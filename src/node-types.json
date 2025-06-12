@@ -24,7 +24,11 @@
           "named": true
         },
         {
-          "type": "string_content",
+          "type": "quoted_string",
+          "named": true
+        },
+        {
+          "type": "template_string",
           "named": true
         }
       ]
@@ -109,33 +113,6 @@
         },
         {
           "type": "quoted_string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "message_body",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "complex_message",
-          "named": true
-        },
-        {
-          "type": "escaped_char",
-          "named": true
-        },
-        {
-          "type": "placeholder",
-          "named": true
-        },
-        {
-          "type": "string_content",
           "named": true
         }
       ]
@@ -230,9 +207,28 @@
     }
   },
   {
-    "type": "quoted_literal",
+    "type": "pound_placeholder",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "quoted_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "complex_message",
+          "named": true
+        },
+        {
+          "type": "placeholder",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "quoted_string",
@@ -252,10 +248,6 @@
         },
         {
           "type": "placeholder",
-          "named": true
-        },
-        {
-          "type": "string_content",
           "named": true
         }
       ]
@@ -373,10 +365,6 @@
         {
           "type": "placeholder",
           "named": true
-        },
-        {
-          "type": "string_content",
-          "named": true
         }
       ]
     }
@@ -390,10 +378,6 @@
       "required": true,
       "types": [
         {
-          "type": "message_body",
-          "named": true
-        },
-        {
           "type": "quoted_string",
           "named": true
         },
@@ -406,6 +390,10 @@
   },
   {
     "type": "\"",
+    "named": false
+  },
+  {
+    "type": "#",
     "named": false
   },
   {
@@ -429,7 +417,15 @@
     "named": false
   },
   {
+    "type": "<",
+    "named": false
+  },
+  {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
     "named": false
   },
   {
@@ -506,10 +502,6 @@
     "named": false
   },
   {
-    "type": "pound_placeholder",
-    "named": true
-  },
-  {
     "type": "select",
     "named": false
   },
@@ -523,10 +515,6 @@
   },
   {
     "type": "skeleton_pattern",
-    "named": true
-  },
-  {
-    "type": "string_content",
     "named": true
   },
   {

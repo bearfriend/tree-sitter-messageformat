@@ -86,10 +86,6 @@
         {
           "type": "SYMBOL",
           "name": "template_string"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "message_body"
         }
       ]
     },
@@ -110,8 +106,8 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "string_content"
+                "type": "PATTERN",
+                "value": "[^\"{}<>']+"
               },
               {
                 "type": "SYMBOL",
@@ -147,8 +143,8 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "string_content"
+                "type": "PATTERN",
+                "value": "[^`{}<>']+"
               },
               {
                 "type": "SYMBOL",
@@ -171,41 +167,6 @@
         }
       ]
     },
-    "message_body": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "string_content"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "placeholder"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "complex_message"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "escaped_char"
-          }
-        ]
-      }
-    },
-    "string_content": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC",
-        "value": -1,
-        "content": {
-          "type": "PATTERN",
-          "value": "[^\"'`{}#\\n\\r]+"
-        }
-      }
-    },
     "escaped_char": {
       "type": "CHOICE",
       "members": [
@@ -227,8 +188,37 @@
           "value": "'"
         },
         {
-          "type": "PATTERN",
-          "value": "[^']*"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{"
+            },
+            {
+              "type": "STRING",
+              "value": "}"
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            },
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "placeholder"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "complex_message"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -528,8 +518,16 @@
             "type": "CHOICE",
             "members": [
               {
+                "type": "PATTERN",
+                "value": "[^{}#<>'\"`]+"
+              },
+              {
                 "type": "SYMBOL",
-                "name": "string_content"
+                "name": "quoted_string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "template_string"
               },
               {
                 "type": "SYMBOL",

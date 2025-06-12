@@ -32,49 +32,31 @@ module.exports = grammar({
 
     value: $ => choice(
       $.quoted_string,
-      $.template_string,
-      $.message_body
+      $.template_string
     ),
 
     identifier: () => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-    quoted_string: $ => seq(
-      '"',
-      repeat(choice(
-        $.string_content,
-        $.placeholder,
-        $.complex_message,
-        $.escaped_char
-      )),
-      '"'
-    ),
-
-    template_string: $ => seq(
-      '`',
-      repeat(choice(
-        $.string_content,
-        $.placeholder,
-        $.complex_message,
-        $.escaped_char
-      )),
-      '`'
-    ),
-
-    message_body: $ => repeat1(choice(
-      $.string_content,
+    quoted_string: $ => seq('"', repeat(choice(
+      /[^"{}<>']+/,
       $.placeholder,
       $.complex_message,
       $.escaped_char
-    )),
+    )), '"'),
 
-    string_content: () => token(prec(-1, /[^"'`{}#\n\r]+/)),
+    template_string: $ => seq('`', repeat(choice(
+      /[^`{}<>']+/,
+      $.placeholder,
+      $.complex_message,
+      $.escaped_char
+    )), '`'),
 
     escaped_char: $ => choice(
       $.quoted_literal,
       "''"  // Two single quotes = literal single quote
     ),
 
-    quoted_literal: () => seq("'", /[^']*/, "'"),
+    quoted_literal: $ => seq("'", choice('{', '}', '<', '>', '#', $.placeholder, $.complex_message), "'"),
 
     placeholder: $ => seq('{', $.identifier, '}'),
 
@@ -148,17 +130,15 @@ module.exports = grammar({
 
     select_key: $ => $.identifier,
 
-    case_body: $ => seq(
-      '{',
-      repeat(choice(
-        $.string_content,
-        $.placeholder,
-        $.complex_message,
-        $.pound_placeholder,
-        $.escaped_char
-      )),
-      '}'
-    ),
+    case_body: $ => seq('{', repeat(choice(
+      /[^{}#<>'"`]+/,
+      $.quoted_string,
+      $.template_string,
+      $.placeholder,
+      $.complex_message,
+      $.pound_placeholder,
+      $.escaped_char
+    )), '}'),
 
     pound_placeholder: () => '#',
 
