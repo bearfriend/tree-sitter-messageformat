@@ -38,14 +38,14 @@ module.exports = grammar({
     identifier: () => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     quoted_string: $ => seq('"', repeat(choice(
-      /[^"{}<>']+/,
+      /[^"{}<>]+|'[a-zA-Z]/,
       $.placeholder,
       $.complex_message,
       $.escaped_char
     )), '"'),
 
     template_string: $ => seq('`', repeat(choice(
-      /[^`{}<>']+/,
+      /[^`{}<>]+|'[a-zA-Z]/,
       $.placeholder,
       $.complex_message,
       $.escaped_char
@@ -81,8 +81,8 @@ module.exports = grammar({
     format_spec: $ => choice(
       $.skeleton_format,
       $.style_format,
-      $.plural_rules,
-      $.select_rules
+      prec(2, $.select_rules),
+      prec(1, $.plural_rules)
     ),
 
     skeleton_format: $ => seq('::', $.skeleton_pattern),
@@ -131,7 +131,7 @@ module.exports = grammar({
     select_key: $ => $.identifier,
 
     case_body: $ => seq('{', repeat(choice(
-      /[^{}#<>'"`]+/,
+      /[^{}#<>"]+|'[a-zA-Z]/,
       $.quoted_string,
       $.template_string,
       $.placeholder,
