@@ -38,52 +38,42 @@ module.exports = grammar({
     identifier: () => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     quoted_string: $ => seq('"', repeat(choice(
-      /[^"{}<>]+|'[a-zA-Z]/,
+      $.escaped_char,
+      prec(-1, "'"),
+      /(\\"|[^"{<'])+/,
       $.placeholder,
       $.complex_message,
-      $.escaped_char
-    )), '"'),
+      $.tag
+    )), optional("'"), '"'),
 
     template_string: $ => seq('`', repeat(choice(
-      /[^`{}<>]+|'[a-zA-Z]/,
+      $.escaped_char,
+      prec(-1, "'"),
+      /(\\`|[^`{<'])+/,
       $.placeholder,
       $.complex_message,
-      $.escaped_char
-    )), '`'),
+      $.tag
+    )), optional("'"), '`'),
 
     escaped_char: $ => choice(
       $.quoted_literal,
       "''"  // Two single quotes = literal single quote
     ),
 
-    quoted_literal: $ => seq("'", choice('{', '}', '<', '>', '#', $.placeholder, $.complex_message), "'"),
+    quoted_literal: $ => seq("'", choice('{', '}', '<', '>', /[{}<>]+/, '#', $.placeholder, $.complex_message, $.tag), "'"),
 
     placeholder: $ => seq('{', $.identifier, '}'),
 
-    complex_message: $ => seq(
-      '{',
-      $.identifier,
-      ',',
-      $.message_type,
-      optional(seq(',', $.format_spec)),
-      '}'
+    tag: $ => seq('<', optional('/'), $.identifier, '>'),
+
+    complex_message: $ => choice(
+      seq('{', $.identifier, ',', 'plural', optional(seq(',', $.plural_rules)), '}'),
+      seq('{', $.identifier, ',', 'selectordinal', optional(seq(',', $.plural_rules)), '}'),
+      seq('{', $.identifier, ',', 'select', optional(seq(',', $.select_rules)), '}'),
+      seq('{', $.identifier, ',', choice('number', 'date', 'time'), optional(seq(',', choice($.skeleton_format, $.style_format))), '}')
     ),
 
-    message_type: () => choice(
-      'number',
-      'date',
-      'time',
-      'plural',
-      'selectordinal',
-      'select'
-    ),
 
-    format_spec: $ => choice(
-      $.skeleton_format,
-      $.style_format,
-      prec(2, $.select_rules),
-      prec(1, $.plural_rules)
-    ),
 
     skeleton_format: $ => seq('::', $.skeleton_pattern),
 
@@ -131,11 +121,12 @@ module.exports = grammar({
     select_key: $ => $.identifier,
 
     case_body: $ => seq('{', repeat(choice(
-      /[^{}#<>"]+|'[a-zA-Z]/,
+      /([^{}#<>"']|'[^{}<>'#])+/,
       $.quoted_string,
       $.template_string,
       $.placeholder,
       $.complex_message,
+      $.tag,
       $.pound_placeholder,
       $.escaped_char
     )), '}'),

@@ -28,6 +28,10 @@
           "named": true
         },
         {
+          "type": "tag",
+          "named": true
+        },
+        {
           "type": "template_string",
           "named": true
         }
@@ -43,15 +47,23 @@
       "required": true,
       "types": [
         {
-          "type": "format_spec",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "message_type",
+          "type": "plural_rules",
+          "named": true
+        },
+        {
+          "type": "select_rules",
+          "named": true
+        },
+        {
+          "type": "skeleton_format",
+          "named": true
+        },
+        {
+          "type": "style_format",
           "named": true
         }
       ]
@@ -67,33 +79,6 @@
       "types": [
         {
           "type": "quoted_literal",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "format_spec",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "plural_rules",
-          "named": true
-        },
-        {
-          "type": "select_rules",
-          "named": true
-        },
-        {
-          "type": "skeleton_format",
-          "named": true
-        },
-        {
-          "type": "style_format",
           "named": true
         }
       ]
@@ -117,11 +102,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "message_type",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "offset",
@@ -226,6 +206,10 @@
         {
           "type": "placeholder",
           "named": true
+        },
+        {
+          "type": "tag",
+          "named": true
         }
       ]
     }
@@ -248,6 +232,10 @@
         },
         {
           "type": "placeholder",
+          "named": true
+        },
+        {
+          "type": "tag",
           "named": true
         }
       ]
@@ -347,6 +335,21 @@
     "fields": {}
   },
   {
+    "type": "tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "template_string",
     "named": true,
     "fields": {},
@@ -364,6 +367,10 @@
         },
         {
           "type": "placeholder",
+          "named": true
+        },
+        {
+          "type": "tag",
           "named": true
         }
       ]
@@ -406,6 +413,10 @@
   },
   {
     "type": ",",
+    "named": false
+  },
+  {
+    "type": "/",
     "named": false
   },
   {
@@ -475,11 +486,11 @@
   },
   {
     "type": "number",
-    "named": true
+    "named": false
   },
   {
     "type": "number",
-    "named": false
+    "named": true
   },
   {
     "type": "offset:",
