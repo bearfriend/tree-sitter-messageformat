@@ -220,6 +220,25 @@
     }
   },
   {
+    "type": "resource",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "key",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "select_case",
     "named": true,
     "fields": {},
@@ -332,11 +351,7 @@
           "named": true
         },
         {
-          "type": "key",
-          "named": true
-        },
-        {
-          "type": "value",
+          "type": "resource",
           "named": true
         }
       ]

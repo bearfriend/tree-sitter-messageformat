@@ -17,13 +17,13 @@ module.exports = grammar({
 
   rules: {
     source_file: $ => repeat(choice(
-      $._entry,
+      $.resource,
       $.comment
     )),
 
     comment: () => token(seq('//', /.*/)),
 
-    _entry: $ => seq($.key, ':', $.value, optional(',')),
+    resource: $ => seq($.key, ':', $.value, optional(',')),
 
     key: $ => choice(
       $.identifier,

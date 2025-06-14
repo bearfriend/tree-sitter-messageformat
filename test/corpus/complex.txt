@@ -7,36 +7,37 @@ status: "{user, select, admin {Admin has {count, plural, =0 {no tasks} other {# 
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (complex_message
-                  (selector
-                    (identifier)
-                    (plural)
-                    (plural_rules
-                      (plural_case
-                        (plural_key
-                          (number))
-                        (case_body))
-                      (plural_case
-                        (plural_key)
-                        (case_body
-                          (pound_placeholder))))))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (complex_message
+                    (selector
+                      (identifier)
+                      (plural)
+                      (plural_rules
+                        (plural_case
+                          (plural_key
+                            (number))
+                          (case_body))
+                        (plural_case
+                          (plural_key)
+                          (case_body
+                            (pound_placeholder))))))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))
 
 ================================================================================
 Deep nesting with multiple message types
@@ -47,55 +48,56 @@ complex: "{type, select, user {User {name} has {count, plural, =0 {no {item, sel
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (placeholder
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
                   (identifier))
-                (complex_message
-                  (selector
-                    (identifier)
-                    (plural)
-                    (plural_rules
-                      (plural_case
-                        (plural_key
-                          (number))
-                        (case_body
-                          (complex_message
-                            (selector
-                              (identifier)
-                              (select)
-                              (select_rules
-                                (select_case
-                                  (select_key
-                                    (identifier))
-                                  (case_body))
-                                (select_case
-                                  (select_key
-                                    (identifier))
-                                  (case_body))
-                                (select_case
-                                  (select_key
-                                    (identifier))
-                                  (case_body)))))))
-                      (plural_case
-                        (plural_key)
-                        (case_body
-                          (pound_placeholder))))))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+                (case_body
+                  (placeholder
+                    (identifier))
+                  (complex_message
+                    (selector
+                      (identifier)
+                      (plural)
+                      (plural_rules
+                        (plural_case
+                          (plural_key
+                            (number))
+                          (case_body
+                            (complex_message
+                              (selector
+                                (identifier)
+                                (select)
+                                (select_rules
+                                  (select_case
+                                    (select_key
+                                      (identifier))
+                                    (case_body))
+                                  (select_case
+                                    (select_key
+                                      (identifier))
+                                    (case_body))
+                                  (select_case
+                                    (select_key
+                                      (identifier))
+                                    (case_body)))))))
+                        (plural_case
+                          (plural_key)
+                          (case_body
+                            (pound_placeholder))))))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))
 
 ================================================================================
 Mixed formatting with skeleton patterns
@@ -106,22 +108,23 @@ formatted: "Event on {date, date, ::EEEE, MMMM d, y} at {time, time, ::h:mm a} c
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (identifier)
-        (skeleton_format
-          (skeleton_pattern)))
-      (complex_message
-        (identifier)
-        (skeleton_format
-          (skeleton_pattern)))
-      (complex_message
-        (identifier)
-        (skeleton_format
-          (skeleton_pattern))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))))))
 
 ================================================================================
 Complex template with multiple nested messages
@@ -139,52 +142,53 @@ notification: `{user, select,
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (template_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (placeholder
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
                   (identifier))
-                (complex_message
-                  (selector
-                    (identifier)
-                    (plural)
-                    (plural_rules
-                      (plural_case
-                        (plural_key
-                          (number))
-                        (case_body))
-                      (plural_case
-                        (plural_key
-                          (number))
-                        (case_body
-                          (placeholder
-                            (identifier))))
-                      (plural_case
-                        (plural_key)
-                        (case_body
-                          (pound_placeholder)
-                          (placeholder
-                            (identifier)))))))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (placeholder
-                  (identifier))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+                (case_body
+                  (placeholder
+                    (identifier))
+                  (complex_message
+                    (selector
+                      (identifier)
+                      (plural)
+                      (plural_rules
+                        (plural_case
+                          (plural_key
+                            (number))
+                          (case_body))
+                        (plural_case
+                          (plural_key
+                            (number))
+                          (case_body
+                            (placeholder
+                              (identifier))))
+                        (plural_case
+                          (plural_key)
+                          (case_body
+                            (pound_placeholder)
+                            (placeholder
+                              (identifier)))))))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (placeholder
+                    (identifier))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))
 
 ================================================================================
 Selectordinal with complex cases
@@ -195,48 +199,49 @@ ranking: "You finished {place, selectordinal, =1 {1st place! You won {prize, sel
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (selectordinal)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body
-                (complex_message
-                  (selector
-                    (identifier)
-                    (select)
-                    (select_rules
-                      (select_case
-                        (select_key
-                          (identifier))
-                        (case_body))
-                      (select_case
-                        (select_key
-                          (identifier))
-                        (case_body))
-                      (select_case
-                        (select_key
-                          (identifier))
-                        (case_body)))))))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (selectordinal)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body
+                  (complex_message
+                    (selector
+                      (identifier)
+                      (select)
+                      (select_rules
+                        (select_case
+                          (select_key
+                            (identifier))
+                          (case_body))
+                        (select_case
+                          (select_key
+                            (identifier))
+                          (case_body))
+                        (select_case
+                          (select_key
+                            (identifier))
+                          (case_body)))))))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Multiple complex messages with escaping
@@ -247,31 +252,32 @@ mixed: "Status: {status, select, online {You're online and have '{count}' messag
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (escaped_char
-                  (quoted_literal))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body)))))
-      (escaped_char
-        (quoted_literal)))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (escaped_char
+                    (quoted_literal))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))
+        (escaped_char
+          (quoted_literal))))))
 
 ================================================================================
 Offset with multiple exact values
@@ -282,39 +288,40 @@ attendees: "{going, plural, offset:2 =0 {Nobody is going} =1 {Only you are going
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (offset
-              (number))
-            (plural_case
-              (plural_key
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (offset
                 (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body
-                (placeholder
-                  (identifier))))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body
+                  (placeholder
+                    (identifier))))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Complex escaping with nested structures
@@ -325,20 +332,21 @@ escaped_complex: "Display '{count, plural, other {items}}' as literal text, not 
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (escaped_char
-        (quoted_literal))
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (escaped_char
+          (quoted_literal))
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body)))))))))
 
 ================================================================================
 All message types combined
@@ -349,44 +357,45 @@ everything: "Date: {date, date, ::MMM d}, Time: {time, time, short}, Amount: {co
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (identifier)
-        (skeleton_format
-          (skeleton_pattern)))
-      (complex_message
-        (identifier)
-        (style_format))
-      (complex_message
-        (identifier)
-        (style_format))
-      (complex_message
-        (selector
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
           (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder))))))
-      (complex_message
-        (selector
+          (skeleton_format
+            (skeleton_pattern)))
+        (complex_message
           (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body)))))
-      (complex_message
-        (selector
+          (style_format))
+        (complex_message
           (identifier)
-          (selectordinal)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+          (style_format))
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))
+        (complex_message
+          (selector
+            (identifier)
+            (selectordinal)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))

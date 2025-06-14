@@ -9,7 +9,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_entry"
+            "name": "resource"
           },
           {
             "type": "SYMBOL",
@@ -34,7 +34,7 @@
         ]
       }
     },
-    "_entry": {
+    "resource": {
       "type": "SEQ",
       "members": [
         {

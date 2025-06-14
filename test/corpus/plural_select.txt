@@ -7,23 +7,24 @@ items: "{count, plural, =0 {no items} other {# items}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Plural with offset
@@ -34,29 +35,30 @@ guests: "{count, plural, offset:1 =0 {no guests} =1 {one guest} other {# guests}
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (offset
-              (number))
-            (plural_case
-              (plural_key
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (offset
                 (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 All plural keywords
@@ -67,34 +69,35 @@ comprehensive: "{count, plural, zero {zero items} one {one item} two {two items}
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Selectordinal
@@ -105,31 +108,32 @@ position: "You finished {place, selectordinal, =1 {1st} =2 {2nd} =3 {3rd} other 
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (selectordinal)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (selectordinal)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Basic select
@@ -140,27 +144,28 @@ gender: "{person, select, male {He} female {She} other {They}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))
 
 ================================================================================
 Select with quoted strings in cases
@@ -171,30 +176,31 @@ style: "{type, select, good {"cool"} bad {"uncool"} other {"neutral"}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (quoted_string)))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (quoted_string)))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (quoted_string)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (quoted_string)))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (quoted_string)))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (quoted_string))))))))))
 
 ================================================================================
 Plural with placeholders in case bodies
@@ -205,33 +211,34 @@ invite: "{count, plural, =0 {No guests invited} =1 {Invited {guest} to {event}} 
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body
-                (placeholder
-                  (identifier))
-                (placeholder
-                  (identifier))))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)
-                (placeholder
-                  (identifier))))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body
+                  (placeholder
+                    (identifier))
+                  (placeholder
+                    (identifier))))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder)
+                  (placeholder
+                    (identifier)))))))))))
 
 ================================================================================
 Select with placeholders in case bodies
@@ -242,33 +249,34 @@ greeting: "{gender, select, male {Hello Mr. {name}} female {Hello Ms. {name}} ot
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (placeholder
-                  (identifier))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (placeholder
-                  (identifier))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (placeholder
-                  (identifier))))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (placeholder
+                    (identifier))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (placeholder
+                    (identifier))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (placeholder
+                    (identifier)))))))))))
 
 ================================================================================
 Plural with large offset
@@ -279,29 +287,30 @@ attendees: "{going, plural, offset:10 =0 {Nobody is going} =1 {Only you are goin
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (offset
-              (number))
-            (plural_case
-              (plural_key
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (offset
                 (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Select with many options
@@ -312,39 +321,40 @@ size: "{item, select, small {S} medium {M} large {L} xlarge {XL} xxlarge {XXL} o
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))
 
 ================================================================================
 Plural with exact numbers
@@ -355,31 +365,32 @@ countdown: "{remaining, plural, =0 {Time's up!} =1 {1 second left} =2 {2 seconds
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Minimal plural
@@ -390,18 +401,19 @@ minimal: "{n, plural, other {items}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body)))))))))
 
 ================================================================================
 Minimal select
@@ -412,16 +424,17 @@ choice: "{type, select, other {default}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))

@@ -7,18 +7,19 @@ empty: "{count, plural, other {}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body)))))))))
 
 ================================================================================
 Only number in case
@@ -29,19 +30,20 @@ number_only: "{count, plural, =5 {5}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body)))))))))
 
 ================================================================================
 Only pound placeholder
@@ -52,19 +54,20 @@ pound_only: "{count, plural, other {#}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Single character identifier
@@ -75,12 +78,13 @@ single: "{a}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (placeholder
-        (identifier)))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (placeholder
+          (identifier))))))
 
 ================================================================================
 Single character key
@@ -91,10 +95,11 @@ a: "value"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string)))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string))))
 
 ================================================================================
 Empty quoted string
@@ -105,10 +110,11 @@ empty: ""
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string)))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string))))
 
 ================================================================================
 Empty template string
@@ -119,10 +125,11 @@ empty: ``
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (template_string)))
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string))))
 
 ================================================================================
 Just a comment
@@ -148,10 +155,11 @@ key: "value"
 (source_file
   (comment)
   (comment)
-  (key
-    (identifier))
-  (value
-    (quoted_string)))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string))))
 
 ================================================================================
 Minimal select with one case
@@ -162,19 +170,20 @@ minimal: "{type, select, other {default}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))
 
 ================================================================================
 Offset zero
@@ -185,20 +194,21 @@ zero_offset: "{count, plural, offset:0 other {items}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (offset
-              (number))
-            (plural_case
-              (plural_key)
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (offset
+                (number))
+              (plural_case
+                (plural_key)
+                (case_body)))))))))
 
 ================================================================================
 Large offset
@@ -209,20 +219,21 @@ large: "{count, plural, offset:999 other {items}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (offset
-              (number))
-            (plural_case
-              (plural_key)
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (offset
+                (number))
+              (plural_case
+                (plural_key)
+                (case_body)))))))))
 
 ================================================================================
 Single escape character
@@ -233,12 +244,13 @@ single_escape: "'{'"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (escaped_char
-        (quoted_literal)))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (escaped_char
+          (quoted_literal))))))
 
 ================================================================================
 Sequential escapes no spaces
@@ -249,14 +261,15 @@ sequential: "'{}''#'"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (escaped_char
-        (quoted_literal))
-      (escaped_char
-        (quoted_literal)))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (escaped_char
+          (quoted_literal))
+        (escaped_char
+          (quoted_literal))))))
 
 ================================================================================
 Identifier with underscores and numbers
@@ -267,12 +280,13 @@ complex_id: "{user_name_123}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (placeholder
-        (identifier)))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (placeholder
+          (identifier))))))
 
 ================================================================================
 Very long identifier
@@ -283,12 +297,13 @@ long: "{very_long_identifier_name_with_many_words_and_numbers_123_456}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (placeholder
-        (identifier)))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (placeholder
+          (identifier))))))
 
 ================================================================================
 Numbers with equals
@@ -299,27 +314,28 @@ numbers: "{count, plural, =0 {} =1 {} =999 {}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body)))))))))
 
 ================================================================================
 All selectordinal forms
@@ -330,54 +346,55 @@ ordinal: "{n, selectordinal, =0 {0th} =1 {1st} =2 {2nd} =3 {3rd} =4 {4th} zero {
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (selectordinal)
-          (plural_rules
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key
-                (number))
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body))
-            (plural_case
-              (plural_key)
-              (case_body
-                (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (selectordinal)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key
+                  (number))
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body))
+              (plural_case
+                (plural_key)
+                (case_body
+                  (pound_placeholder))))))))))
 
 ================================================================================
 Skeleton with special characters
@@ -388,14 +405,15 @@ special: "{date, date, ::yyyy-MM-dd'T'HH:mm:ss.SSSZ}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (identifier)
-        (skeleton_format
-          (skeleton_pattern))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))))))
 
 ================================================================================
 Just whitespace in case
@@ -406,18 +424,19 @@ whitespace: "{count, plural, other {   }}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (plural)
-          (plural_rules
-            (plural_case
-              (plural_key)
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (case_body)))))))))
 
 ================================================================================
 Nested empty cases
@@ -428,31 +447,32 @@ nested_empty: "{a, select, x {has {b, plural, other {}}} other {}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (complex_message
-        (selector
-          (identifier)
-          (select)
-          (select_rules
-            (select_case
-              (select_key
-                (identifier))
-              (case_body
-                (complex_message
-                  (selector
-                    (identifier)
-                    (plural)
-                    (plural_rules
-                      (plural_case
-                        (plural_key)
-                        (case_body)))))))
-            (select_case
-              (select_key
-                (identifier))
-              (case_body))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body
+                  (complex_message
+                    (selector
+                      (identifier)
+                      (plural)
+                      (plural_rules
+                        (plural_case
+                          (plural_key)
+                          (case_body)))))))
+              (select_case
+                (select_key
+                  (identifier))
+                (case_body)))))))))
 
 ================================================================================
 Single word in template
@@ -463,10 +483,11 @@ word: `hello`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (template_string)))
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string))))
 
 ================================================================================
 Entry without comma
@@ -478,14 +499,16 @@ next: "value2"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string))
-  (key
-    (identifier))
-  (value
-    (quoted_string)))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string))))
 
 ================================================================================
 Quoted key
@@ -496,10 +519,11 @@ Quoted key
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (quoted_string))
-  (value
-    (quoted_string)))
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (quoted_string))))
 
 ================================================================================
 Tag with no content
@@ -510,9 +534,10 @@ tag: "Use <br> for breaks"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key
-    (identifier))
-  (value
-    (quoted_string
-      (tag
-        (identifier)))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (tag
+          (identifier))))))
