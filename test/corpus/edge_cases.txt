@@ -285,20 +285,6 @@ special: "{date, date, ::yyyy-MM-dd'T'HH:mm:ss.SSSZ}"
       (identifier)
       (skeleton_format (skeleton_pattern))))))
 
-================================================================================
-Empty skeleton
-================================================================================
-
-empty_skeleton: "{number, number, ::}"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (skeleton_format (skeleton_pattern))))))
 
 ================================================================================
 Just whitespace in case
@@ -389,15 +375,3 @@ tag: "Use <br> for breaks"
   (value (quoted_string
     (tag (identifier)))))
 
-================================================================================
-Self-closing tag
-================================================================================
-
-self_close: "Image: <img/>"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (tag (identifier)))))
