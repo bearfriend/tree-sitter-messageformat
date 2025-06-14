@@ -7,18 +7,36 @@ status: "{user, select, admin {Admin has {count, plural, =0 {no tasks} other {# 
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key) (case_body (pound_placeholder)))))))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (complex_message
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key)
+                        (case_body
+                          (pound_placeholder))))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Nested select in plural
@@ -29,19 +47,40 @@ items: "{count, plural, =0 {No {type, select, task {tasks} message {messages} ot
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (plural_rules
-        (plural_case (plural_key (number)) (case_body
-          (complex_message
-            (identifier)
-            (select_rules
-              (select_case (select_key (identifier)) (case_body))
-              (select_case (select_key (identifier)) (case_body))
-              (select_case (select_key (identifier)) (case_body))))))
-        (plural_case (plural_key) (case_body (pound_placeholder))))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (plural)
+          (plural_rules
+            (plural_case
+              (plural_key
+                (number))
+              (case_body
+                (complex_message
+                  (selector
+                    (identifier)
+                    (select)
+                    (select_rules
+                      (select_case
+                        (select_key
+                          (identifier))
+                        (case_body))
+                      (select_case
+                        (select_key
+                          (identifier))
+                        (case_body))
+                      (select_case
+                        (select_key
+                          (identifier))
+                        (case_body)))))))
+            (plural_case
+              (plural_key)
+              (case_body
+                (pound_placeholder)))))))))
 
 ================================================================================
 Triple nesting - select plural select
@@ -52,25 +91,55 @@ complex: "{type, select, user {User {name} has {count, plural, =0 {no {item, sel
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (placeholder (identifier))
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key (number)) (case_body
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (placeholder
+                  (identifier))
                 (complex_message
-                  (identifier)
-                  (select_rules
-                    (select_case (select_key (identifier)) (case_body))
-                    (select_case (select_key (identifier)) (case_body))
-                    (select_case (select_key (identifier)) (case_body))))))
-              (plural_case (plural_key) (case_body (pound_placeholder)))))))
-        (select_case (select_key (identifier)) (case_body)))))))
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body
+                          (complex_message
+                            (selector
+                              (identifier)
+                              (select)
+                              (select_rules
+                                (select_case
+                                  (select_key
+                                    (identifier))
+                                  (case_body))
+                                (select_case
+                                  (select_key
+                                    (identifier))
+                                  (case_body))
+                                (select_case
+                                  (select_key
+                                    (identifier))
+                                  (case_body)))))))
+                      (plural_case
+                        (plural_key)
+                        (case_body
+                          (pound_placeholder))))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Multiple nesting levels with placeholders
@@ -81,21 +150,48 @@ nested: "{user, select, admin {Welcome {name}, you have {count, plural, =0 {no m
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (placeholder (identifier))
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key) (case_body (pound_placeholder)))))))
-        (select_case (select_key (identifier)) (case_body (placeholder (identifier))))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (placeholder
+                  (identifier))
+                (complex_message
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key)
+                        (case_body
+                          (pound_placeholder))))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (placeholder
+                  (identifier))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Nested with offset
@@ -106,20 +202,42 @@ progress: "{stage, select, initial {Starting {count, plural, offset:1 =0 {no tas
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (complex_message
-            (identifier)
-            (plural_rules
-              (offset (number))
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key) (case_body (pound_placeholder)))))))
-        (select_case (select_key (identifier)) (case_body))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (complex_message
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (offset
+                        (number))
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key)
+                        (case_body
+                          (pound_placeholder))))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Nested selectordinal in select
@@ -130,21 +248,48 @@ ranking: "{category, select, sports {You finished {place, selectordinal, =1 {1st
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key) (case_body (pound_placeholder)))))))
-        (select_case (select_key (identifier)) (case_body))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (complex_message
+                  (selector
+                    (identifier)
+                    (selectordinal)
+                    (plural_rules
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key)
+                        (case_body
+                          (pound_placeholder))))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Deep nesting with multiple placeholders
@@ -155,26 +300,61 @@ deep: "{level, select, advanced {User {name} in {team, select, red {Red Team has
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (placeholder (identifier))
-          (complex_message
-            (identifier)
-            (select_rules
-              (select_case (select_key (identifier)) (case_body
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (placeholder
+                  (identifier))
                 (complex_message
-                  (identifier)
-                  (plural_rules
-                    (plural_case (plural_key (number)) (case_body))
-                    (plural_case (plural_key) (case_body (pound_placeholder)))))))
-              (select_case (select_key (identifier)) (case_body))
-              (select_case (select_key (identifier)) (case_body))))))
-        (select_case (select_key (identifier)) (case_body (placeholder (identifier))))
-        (select_case (select_key (identifier)) (case_body)))))))
+                  (selector
+                    (identifier)
+                    (select)
+                    (select_rules
+                      (select_case
+                        (select_key
+                          (identifier))
+                        (case_body
+                          (complex_message
+                            (selector
+                              (identifier)
+                              (plural)
+                              (plural_rules
+                                (plural_case
+                                  (plural_key
+                                    (number))
+                                  (case_body))
+                                (plural_case
+                                  (plural_key)
+                                  (case_body
+                                    (pound_placeholder))))))))
+                      (select_case
+                        (select_key
+                          (identifier))
+                        (case_body))
+                      (select_case
+                        (select_key
+                          (identifier))
+                        (case_body)))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (placeholder
+                  (identifier))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Nested with quoted strings
@@ -185,19 +365,41 @@ notification: "{type, select, urgent {URGENT: {count, plural, =0 {"no items"} ot
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key (number)) (case_body (quoted_string)))
-              (plural_case (plural_key) (case_body (quoted_string) (pound_placeholder)))))))
-        (select_case (select_key (identifier)) (case_body))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (complex_message
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body
+                          (quoted_string)))
+                      (plural_case
+                        (plural_key)
+                        (case_body
+                          (quoted_string))))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Minimal nesting
@@ -208,17 +410,31 @@ simple: "{a, select, x {has {b, plural, other {items}}} other {none}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key) (case_body))))))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (complex_message
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (plural_case
+                        (plural_key)
+                        (case_body)))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Empty nested cases
@@ -229,14 +445,28 @@ empty: "{type, select, none {No {count, plural, other {}}} other {Something}}"
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key) (case_body))))))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (quoted_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (complex_message
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (plural_case
+                        (plural_key)
+                        (case_body)))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))

@@ -60,20 +60,28 @@ module.exports = grammar({
       "''"  // Two single quotes = literal single quote
     ),
 
-    quoted_literal: $ => seq("'", choice('{', '}', '<', '>', /[{}<>]+/, '#', $.placeholder, $.complex_message, $.tag), "'"),
+    quoted_literal: () => seq("'", choice('{', '}', '<', '>', '#'), /[^']*/, "'"),
 
     placeholder: $ => seq('{', $.identifier, '}'),
 
     tag: $ => seq('<', optional('/'), $.identifier, '>'),
 
     complex_message: $ => choice(
-      seq('{', $.identifier, ',', 'plural', optional(seq(',', $.plural_rules)), '}'),
-      seq('{', $.identifier, ',', 'selectordinal', optional(seq(',', $.plural_rules)), '}'),
-      seq('{', $.identifier, ',', 'select', optional(seq(',', $.select_rules)), '}'),
+      $.selector,
       seq('{', $.identifier, ',', choice('number', 'date', 'time'), optional(seq(',', choice($.skeleton_format, $.style_format))), '}')
     ),
 
+    selector: $ => choice(
+      seq('{', $.identifier, ',', $.plural, optional(seq(',', $.plural_rules)), '}'),
+      seq('{', $.identifier, ',', $.selectordinal, optional(seq(',', $.plural_rules)), '}'),
+      seq('{', $.identifier, ',', $.select, optional(seq(',', $.select_rules)), '}'),
+    ),
 
+    plural: () => 'plural',
+
+    select: () => 'select',
+
+    selectordinal: () => 'selectordinal',
 
     skeleton_format: $ => seq('::', $.skeleton_pattern),
 

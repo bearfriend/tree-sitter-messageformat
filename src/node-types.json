@@ -51,11 +51,7 @@
           "named": true
         },
         {
-          "type": "plural_rules",
-          "named": true
-        },
-        {
-          "type": "select_rules",
+          "type": "selector",
           "named": true
         },
         {
@@ -194,25 +190,7 @@
   {
     "type": "quoted_literal",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "complex_message",
-          "named": true
-        },
-        {
-          "type": "placeholder",
-          "named": true
-        },
-        {
-          "type": "tag",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "quoted_string",
@@ -285,6 +263,41 @@
       "types": [
         {
           "type": "select_case",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "selector",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "plural",
+          "named": true
+        },
+        {
+          "type": "plural_rules",
+          "named": true
+        },
+        {
+          "type": "select",
+          "named": true
+        },
+        {
+          "type": "select_rules",
+          "named": true
+        },
+        {
+          "type": "selectordinal",
           "named": true
         }
       ]
@@ -510,15 +523,15 @@
   },
   {
     "type": "plural",
-    "named": false
+    "named": true
   },
   {
     "type": "select",
-    "named": false
+    "named": true
   },
   {
     "type": "selectordinal",
-    "named": false
+    "named": true
   },
   {
     "type": "short",

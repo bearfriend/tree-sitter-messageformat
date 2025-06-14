@@ -7,8 +7,10 @@ simple: `Hello world`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string)))
+  (key
+    (identifier))
+  (value
+    (template_string)))
 
 ================================================================================
 Template with placeholder
@@ -19,9 +21,12 @@ greeting: `Hello {name}!`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (placeholder (identifier)))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (placeholder
+        (identifier)))))
 
 ================================================================================
 Multiline template string
@@ -34,8 +39,10 @@ This is line three`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string)))
+  (key
+    (identifier))
+  (value
+    (template_string)))
 
 ================================================================================
 Template with multiple placeholders
@@ -46,10 +53,14 @@ message: `Hello {name}, you have {count} messages`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (placeholder (identifier))
-    (placeholder (identifier)))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (placeholder
+        (identifier))
+      (placeholder
+        (identifier)))))
 
 ================================================================================
 Template with complex message
@@ -60,13 +71,23 @@ complex: `You have {count, plural, =0 {no messages} other {# messages}}`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (complex_message
-      (identifier)
-      (plural_rules
-        (plural_case (plural_key (number)) (case_body))
-        (plural_case (plural_key) (case_body (pound_placeholder))))))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (complex_message
+        (selector
+          (identifier)
+          (plural)
+          (plural_rules
+            (plural_case
+              (plural_key
+                (number))
+              (case_body))
+            (plural_case
+              (plural_key)
+              (case_body
+                (pound_placeholder)))))))))
 
 ================================================================================
 Template with nested complex messages
@@ -77,19 +98,40 @@ nested: `{user, select, admin {Welcome {name}! You have {count, plural, =0 {no t
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body
-          (placeholder (identifier))
-          (complex_message
-            (identifier)
-            (plural_rules
-              (plural_case (plural_key (number)) (case_body))
-              (plural_case (plural_key) (case_body (pound_placeholder)))))))
-        (select_case (select_key (identifier)) (case_body (placeholder (identifier)))))))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (placeholder
+                  (identifier))
+                (complex_message
+                  (selector
+                    (identifier)
+                    (plural)
+                    (plural_rules
+                      (plural_case
+                        (plural_key
+                          (number))
+                        (case_body))
+                      (plural_case
+                        (plural_key)
+                        (case_body
+                          (pound_placeholder))))))))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body
+                (placeholder
+                  (identifier))))))))))
 
 ================================================================================
 Template with escaping
@@ -100,10 +142,14 @@ escaped: `Use '{' and '}' for literal braces`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (escaped_char (quoted_literal))
-    (escaped_char (quoted_literal)))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (escaped_char
+        (quoted_literal))
+      (escaped_char
+        (quoted_literal)))))
 
 ================================================================================
 Empty template string
@@ -114,8 +160,10 @@ empty: ``
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string)))
+  (key
+    (identifier))
+  (value
+    (template_string)))
 
 ================================================================================
 Template with apostrophes
@@ -126,8 +174,10 @@ possessive: `This is John's book and Mary's pen`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string)))
+  (key
+    (identifier))
+  (value
+    (template_string)))
 
 ================================================================================
 Template ending with single quote
@@ -138,10 +188,12 @@ ending: `Hello {name}'`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (placeholder (identifier))
-    ("'"))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (placeholder
+        (identifier)))))
 
 ================================================================================
 Complex multiline template with indentation
@@ -162,21 +214,46 @@ formatted: `Welcome {name}!
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (placeholder (identifier))
-    (complex_message
-      (identifier)
-      (plural_rules
-        (plural_case (plural_key (number)) (case_body))
-        (plural_case (plural_key (number)) (case_body))
-        (plural_case (plural_key) (case_body (pound_placeholder)))))
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body))
-        (select_case (select_key (identifier)) (case_body))
-        (select_case (select_key (identifier)) (case_body)))))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (placeholder
+        (identifier))
+      (complex_message
+        (selector
+          (identifier)
+          (plural)
+          (plural_rules
+            (plural_case
+              (plural_key
+                (number))
+              (case_body))
+            (plural_case
+              (plural_key
+                (number))
+              (case_body))
+            (plural_case
+              (plural_key)
+              (case_body
+                (pound_placeholder))))))
+      (complex_message
+        (selector
+          (identifier)
+          (select)
+          (select_rules
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))
+            (select_case
+              (select_key
+                (identifier))
+              (case_body))))))))
 
 ================================================================================
 Template with mixed quotes
@@ -187,8 +264,10 @@ mixed: `He said "Hello" and she said 'Hi'`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string)))
+  (key
+    (identifier))
+  (value
+    (template_string)))
 
 ================================================================================
 Template with tags
@@ -199,10 +278,18 @@ tags: `Use <b>bold</b> and <i>italic</i> tags`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (tag (identifier))
-    (tag (identifier)))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (tag
+        (identifier))
+      (tag
+        (identifier))
+      (tag
+        (identifier))
+      (tag
+        (identifier)))))
 
 ================================================================================
 Template with escaped tags
@@ -213,10 +300,14 @@ escaped_tags: `Literal '<b>' and '</i>' tags`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (escaped_char (quoted_literal (tag (identifier))))
-    (escaped_char (quoted_literal (tag (identifier)))))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (escaped_char
+        (quoted_literal))
+      (escaped_char
+        (quoted_literal)))))
 
 ================================================================================
 Template with number formatting
@@ -227,14 +318,18 @@ numbers: `Price: {amount, number, ::currency/USD} on {date, date, ::MMM d}`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (complex_message
-      (identifier)
-      (skeleton_format (skeleton_pattern)))
-    (complex_message
-      (identifier)
-      (skeleton_format (skeleton_pattern))))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (complex_message
+        (identifier)
+        (skeleton_format
+          (skeleton_pattern)))
+      (complex_message
+        (identifier)
+        (skeleton_format
+          (skeleton_pattern))))))
 
 ================================================================================
 Only placeholder in template
@@ -245,9 +340,12 @@ placeholder_only: `{user}`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (placeholder (identifier)))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (placeholder
+        (identifier)))))
 
 ================================================================================
 Template with double single quotes
@@ -258,6 +356,8 @@ literal_quote: `Don''t use this pattern`
 --------------------------------------------------------------------------------
 
 (source_file
-  (key (identifier))
-  (value (template_string
-    (escaped_char))))
+  (key
+    (identifier))
+  (value
+    (template_string
+      (escaped_char))))
