@@ -5,7 +5,7 @@
   "repository": "https://github.com/bearfriend/tree-sitter-messageformat",
   "license": "MIT",
   "author": {
-    "name": "Danny Gleckle",
+    "name": "Danny Gleckler",
     "email": "daniel.gleckler@gmail.com"
   },
   "main": "bindings/node",
@@ -46,6 +46,11 @@
     "install": "node-gyp-build",
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js"
+    "test": "node --test bindings/node/*_test.js",
+    "test:grammar": "tree-sitter test",
+    "test:highlight": "tree-sitter highlight highlight-test.msg",
+    "generate": "tree-sitter generate",
+    "build": "tree-sitter build",
+    "highlight": "tree-sitter highlight"
   }
 }
