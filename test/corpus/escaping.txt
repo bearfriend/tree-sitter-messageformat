@@ -1,183 +1,59 @@
 ================================================================================
-Simple placeholder
+Escaped braces
 ================================================================================
 
-simple: "Hello {name}!"
+escaped: "Use '{' and '}' for braces"
 
 --------------------------------------------------------------------------------
 
 (source_file
   (key (identifier))
   (value (quoted_string
-    (placeholder (identifier)))))
-
-================================================================================
-Simple text only
-================================================================================
-
-greeting: "Hello world!"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string)))
-
-================================================================================
-Comment
-================================================================================
-
-// This is a comment
-greeting: "Hello!"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (comment)
-  (key (identifier))
-  (value (quoted_string)))
-
-================================================================================
-Multiple entries with comma
-================================================================================
-
-greeting: "Hello!",
-farewell: "Goodbye!"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string))
-  (key (identifier))
-  (value (quoted_string)))
-
-================================================================================
-Number formatting with skeleton
-================================================================================
-
-price: "Cost: {amount, number, ::currency/USD}"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (skeleton_format (skeleton_pattern))))))
-
-================================================================================
-Date formatting with skeleton
-================================================================================
-
-birthday: "Born on {date, date, ::MMM d, y}"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (skeleton_format (skeleton_pattern))))))
-
-================================================================================
-Time formatting with skeleton
-================================================================================
-
-meeting: "Meeting at {time, time, ::h:mm a}"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (skeleton_format (skeleton_pattern))))))
-
-================================================================================
-Number formatting with style
-================================================================================
-
-amount: "Total: {value, number, currency}"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (style_format)))))
-
-================================================================================
-Simple plural
-================================================================================
-
-items: "{count, plural, =0 {no items} other {# items}}"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (plural_rules
-        (plural_case (plural_key (number)) (case_body))
-        (plural_case (plural_key) (case_body (pound_placeholder))))))))
-
-================================================================================
-Simple select
-================================================================================
-
-gender: "{person, select, male {He} female {She} other {They}}"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (complex_message
-      (identifier)
-      (select_rules
-        (select_case (select_key (identifier)) (case_body))
-        (select_case (select_key (identifier)) (case_body))
-        (select_case (select_key (identifier)) (case_body)))))))
-
-================================================================================
-Template string
-================================================================================
-
-multiline: `Hello {name}!
-Welcome back.`
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (template_string
-    (placeholder (identifier)))))
-
-================================================================================
-Escaped characters
-================================================================================
-
-escaped: "Use '{' and '}' for braces, or '#' for pound"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (key (identifier))
-  (value (quoted_string
-    (escaped_char (quoted_literal))
     (escaped_char (quoted_literal))
     (escaped_char (quoted_literal)))))
 
 ================================================================================
-Apostrophe in text
+Escaped pound sign
+================================================================================
+
+pound: "Use '#' for pound placeholder"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char (quoted_literal)))))
+
+================================================================================
+Escaped tags
+================================================================================
+
+tags: "Use '<' and '>' for tags"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal)))))
+
+================================================================================
+Double single quotes for literal quote
+================================================================================
+
+literal: "Don''t use this"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char))))
+
+================================================================================
+Apostrophe in regular text
 ================================================================================
 
 possessive: "This is John's book"
@@ -189,7 +65,7 @@ possessive: "This is John's book"
   (value (quoted_string)))
 
 ================================================================================
-Single quote at end
+Single quote at end of string
 ================================================================================
 
 ending: "Hello {name}'"
@@ -203,24 +79,104 @@ ending: "Hello {name}'"
     ("'"))))
 
 ================================================================================
-Mixed text and placeholders
+Mixed escaping
 ================================================================================
 
-message: "Hello {name}, you have {count} messages!"
+mixed: "Say '{' and '}' for braces, '#' for pound, don''t forget"
 
 --------------------------------------------------------------------------------
 
 (source_file
   (key (identifier))
   (value (quoted_string
-    (placeholder (identifier))
-    (placeholder (identifier)))))
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal))
+    (escaped_char))))
 
 ================================================================================
-Empty quoted string
+Escaping in case bodies
 ================================================================================
 
-empty: ""
+cases: "{type, select, brace {Use '{'} pound {Use '#'} other {Normal}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (complex_message
+      (identifier)
+      (select_rules
+        (select_case (select_key (identifier)) (case_body (escaped_char (quoted_literal))))
+        (select_case (select_key (identifier)) (case_body (escaped_char (quoted_literal))))
+        (select_case (select_key (identifier)) (case_body)))))))
+
+================================================================================
+Escaping in template strings
+================================================================================
+
+template: `Use '{' and '}' in templates`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (template_string
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal)))))
+
+================================================================================
+Escaped placeholder in literal
+================================================================================
+
+literal_placeholder: "This shows '{{name}}' literally"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char (quoted_literal (placeholder (identifier)))))))
+
+================================================================================
+Escaped complex message in literal
+================================================================================
+
+literal_complex: "This shows '{count, plural, other {items}}' literally"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char (quoted_literal (complex_message
+      (identifier)
+      (plural_rules
+        (plural_case (plural_key) (case_body)))))))))
+
+================================================================================
+Multiple escapes in sequence
+================================================================================
+
+sequence: "'{' '}' '#' '{' '}'"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal)))))
+
+================================================================================
+Apostrophe contractions
+================================================================================
+
+contractions: "I'm, you're, it's, don't, won't"
 
 --------------------------------------------------------------------------------
 
@@ -229,14 +185,63 @@ empty: ""
   (value (quoted_string)))
 
 ================================================================================
-Only placeholder
+Escaped tag in literal
 ================================================================================
 
-name: "{user}"
+literal_tag: "Use '<b>' for bold"
 
 --------------------------------------------------------------------------------
 
 (source_file
   (key (identifier))
   (value (quoted_string
-    (placeholder (identifier)))))
+    (escaped_char (quoted_literal (tag (identifier)))))))
+
+================================================================================
+Complex escaping with nested structures
+================================================================================
+
+complex_escape: "{type, select, show {Display '{{count, plural, other {items}}}' as literal} hide {Don''t show} other {Normal {count} display}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (complex_message
+      (identifier)
+      (select_rules
+        (select_case (select_key (identifier)) (case_body
+          (escaped_char (quoted_literal (complex_message
+            (identifier)
+            (plural_rules
+              (plural_case (plural_key) (case_body))))))))
+        (select_case (select_key (identifier)) (case_body (escaped_char)))
+        (select_case (select_key (identifier)) (case_body (placeholder (identifier)))))))))
+
+================================================================================
+Empty escaped literal
+================================================================================
+
+empty_escape: "This has '{}' empty braces"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char (quoted_literal)))))
+
+================================================================================
+Escaping at string boundaries
+================================================================================
+
+boundaries: "'{start}' and '{end}'"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key (identifier))
+  (value (quoted_string
+    (escaped_char (quoted_literal))
+    (escaped_char (quoted_literal)))))
