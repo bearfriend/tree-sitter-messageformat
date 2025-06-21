@@ -1,44 +1,5 @@
 [
   {
-    "type": "case_body",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "complex_message",
-          "named": true
-        },
-        {
-          "type": "escaped_char",
-          "named": true
-        },
-        {
-          "type": "placeholder",
-          "named": true
-        },
-        {
-          "type": "pound_placeholder",
-          "named": true
-        },
-        {
-          "type": "quoted_string",
-          "named": true
-        },
-        {
-          "type": "tag",
-          "named": true
-        },
-        {
-          "type": "template_string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "complex_message",
     "named": true,
     "fields": {},
@@ -68,17 +29,7 @@
   {
     "type": "escaped_char",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "quoted_literal",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "key",
@@ -138,11 +89,50 @@
       "required": true,
       "types": [
         {
-          "type": "case_body",
+          "type": "plural_case_body",
           "named": true
         },
         {
           "type": "plural_key",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "plural_case_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "complex_message",
+          "named": true
+        },
+        {
+          "type": "escaped_char",
+          "named": true
+        },
+        {
+          "type": "placeholder",
+          "named": true
+        },
+        {
+          "type": "pound_placeholder",
+          "named": true
+        },
+        {
+          "type": "quoted_string",
+          "named": true
+        },
+        {
+          "type": "tag",
+          "named": true
+        },
+        {
+          "type": "template_string",
           "named": true
         }
       ]
@@ -181,16 +171,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "pound_placeholder",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "quoted_literal",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "quoted_string",
@@ -247,11 +227,46 @@
       "required": true,
       "types": [
         {
-          "type": "case_body",
+          "type": "select_case_body",
           "named": true
         },
         {
           "type": "select_key",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_case_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "complex_message",
+          "named": true
+        },
+        {
+          "type": "escaped_char",
+          "named": true
+        },
+        {
+          "type": "placeholder",
+          "named": true
+        },
+        {
+          "type": "quoted_string",
+          "named": true
+        },
+        {
+          "type": "tag",
+          "named": true
+        },
+        {
+          "type": "template_string",
           "named": true
         }
       ]
@@ -263,7 +278,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "identifier",
@@ -428,10 +443,6 @@
     "named": false
   },
   {
-    "type": "#",
-    "named": false
-  },
-  {
     "type": "'",
     "named": false
   },
@@ -538,6 +549,10 @@
   },
   {
     "type": "plural",
+    "named": true
+  },
+  {
+    "type": "pound_placeholder",
     "named": true
   },
   {

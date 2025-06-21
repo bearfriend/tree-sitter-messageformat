@@ -56,11 +56,9 @@ module.exports = grammar({
     )), optional("'"), '`'),
 
     escaped_char: $ => choice(
-      $.quoted_literal,
+      token(seq("'", choice('{', '}', '<', '>', '#'), /[^']*/, "'")),
       "''"  // Two single quotes = literal single quote
     ),
-
-    quoted_literal: () => seq("'", choice('{', '}', '<', '>', '#'), /[^']*/, "'"),
 
     placeholder: $ => seq('{', $.identifier, '}'),
 
@@ -108,12 +106,12 @@ module.exports = grammar({
 
     plural_case: $ => seq(
       $.plural_key,
-      $.case_body
+      $.plural_case_body
     ),
 
     select_case: $ => seq(
       $.select_key,
-      $.case_body
+      $.select_case_body
     ),
 
     plural_key: $ => choice(
@@ -126,9 +124,9 @@ module.exports = grammar({
       'other'
     ),
 
-    select_key: $ => $.identifier,
+    select_key: $ => choice($.identifier, "other"), // todo: anythinng but {}'#<>
 
-    case_body: $ => seq('{', repeat(choice(
+    plural_case_body: $ => seq('{', repeat(choice(
       /([^{}#<>"']|'[^{}<>'#])+/,
       $.quoted_string,
       $.template_string,
@@ -136,6 +134,16 @@ module.exports = grammar({
       $.complex_message,
       $.tag,
       $.pound_placeholder,
+      $.escaped_char
+    )), '}'),
+
+    select_case_body: $ => seq('{', repeat(choice(
+      /([^{}<>"']|'[^{}<>'])+/,
+      $.quoted_string,
+      $.template_string,
+      $.placeholder,
+      $.complex_message,
+      $.tag,
       $.escaped_char
     )), '}'),
 

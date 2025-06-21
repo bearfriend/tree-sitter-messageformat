@@ -30,7 +30,7 @@
 (select_key (identifier) @constant)
 
 ; Numbers
-(number) @number
+;(number) @number
 
 ; Offset keyword and value
 "offset:" @keyword
@@ -50,8 +50,8 @@
 (tag (identifier) @tag)
 
 ; Escaped characters
-(escaped_char) @string.escape
-(quoted_literal) @string.escape
+;(escaped_char) @string.escape
+;(quoted_literal) @string.escape
 
 ; Operators and punctuation
 "=" @operator

@@ -219,54 +219,53 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "quoted_literal"
+          "type": "TOKEN",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "'"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "{"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "}"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "<"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ">"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "#"
+                  }
+                ]
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^']*"
+              },
+              {
+                "type": "STRING",
+                "value": "'"
+              }
+            ]
+          }
         },
         {
           "type": "STRING",
           "value": "''"
-        }
-      ]
-    },
-    "quoted_literal": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "'"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "{"
-            },
-            {
-              "type": "STRING",
-              "value": "}"
-            },
-            {
-              "type": "STRING",
-              "value": "<"
-            },
-            {
-              "type": "STRING",
-              "value": ">"
-            },
-            {
-              "type": "STRING",
-              "value": "#"
-            }
-          ]
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^']*"
-        },
-        {
-          "type": "STRING",
-          "value": "'"
         }
       ]
     },
@@ -651,7 +650,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "case_body"
+          "name": "plural_case_body"
         }
       ]
     },
@@ -664,7 +663,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "case_body"
+          "name": "select_case_body"
         }
       ]
     },
@@ -711,10 +710,19 @@
       ]
     },
     "select_key": {
-      "type": "SYMBOL",
-      "name": "identifier"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "other"
+        }
+      ]
     },
-    "case_body": {
+    "plural_case_body": {
       "type": "SEQ",
       "members": [
         {
@@ -753,6 +761,55 @@
               {
                 "type": "SYMBOL",
                 "name": "pound_placeholder"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "escaped_char"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "select_case_body": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "([^{}<>\"']|'[^{}<>'])+"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "quoted_string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "template_string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "placeholder"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "complex_message"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "tag"
               },
               {
                 "type": "SYMBOL",
