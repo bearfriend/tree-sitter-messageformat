@@ -13,18 +13,19 @@
 (select_case_body (quoted_string) @string)
 (select_case_body (template_string) @string)
 
-; Identifiers (variables) -- scoped by parent so they never overlap
-; with keys (@property), select keys (@constant) or tags (@tag)
+; Variables -- scoped by parent so patterns never overlap with
+; keys (@property), select keys (@constant) or tags (@tag)
+(placeholder (identifier) @variable)
 (complex_message (identifier) @variable)
 (selector (identifier) @variable)
 
-; Placeholders
-(placeholder (identifier) @variable.parameter)
+; Message format keywords
+[(plural) (select) (selectordinal)] @keyword
+"offset:" @keyword
 
-; Complex message format keywords
-(plural) @keyword
-(select) @keyword
-(selectordinal) @keyword
+; Module wrapper (`export default { ... };`)
+["export" "default"] @keyword
+(module_end ";" @punctuation.delimiter)
 
 ; Format types
 ["number" "date" "time"] @type
@@ -39,9 +40,6 @@
 ; Numbers
 (number) @number
 
-; Offset keyword and value
-"offset:" @keyword
-
 ; Style formats
 (style_format) @constant.builtin
 
@@ -49,14 +47,8 @@
 (skeleton_format "::" @operator)
 (skeleton_pattern) @string.special
 
-; Module wrapper (`export default { ... };`)
-["export" "default"] @keyword
-(module_start "{" @punctuation.bracket)
-(module_end "}" @punctuation.bracket)
-(module_end ";" @punctuation.delimiter)
-
 ; Pound placeholder
-(pound_placeholder) @variable.builtin
+(pound_placeholder) @variable.special
 
 ; Tags
 (tag (identifier) @tag)
@@ -65,15 +57,9 @@
 (escaped_char) @string.escape
 
 ; Operators and punctuation
-"=" @operator
-":" @punctuation.delimiter
-"," @punctuation.delimiter
-"{" @punctuation.bracket
-"}" @punctuation.bracket
-"<" @punctuation.bracket
-">" @punctuation.bracket
-"/" @operator
+["=" "/"] @operator
+["," ":"] @punctuation.delimiter
+["{" "}" "<" ">"] @punctuation.bracket
 
-; String delimiters (a bare `'` is plain text or part of an escape, never a delimiter)
-"\"" @punctuation.delimiter
-"`" @punctuation.delimiter
+; Note: string quotes are deliberately not captured separately, so they take
+; the @string colour. A bare `'` is plain text or part of an escape.

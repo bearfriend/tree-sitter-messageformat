@@ -2,10 +2,10 @@
 // <- comment
 greeting: "Hello {name}!"
 // <- property
-//        ^ punctuation.delimiter
+//        ^ string
 //         ^ string
 //               ^ punctuation.bracket
-//                ^ variable.parameter
+//                ^ variable
 items: `{count, plural, offset:1 =0 {none} one {# item} other {# items}}`
 // <- property
 //       ^ variable
@@ -15,7 +15,7 @@ items: `{count, plural, offset:1 =0 {none} one {# item} other {# items}}`
 //                               ^ operator
 //                                   ^ string
 //                                         ^ constant.builtin
-//                                              ^ variable.builtin
+//                                              ^ variable.special
 //                                                      ^ constant.builtin
 sel: "{g, select, male {He} other {They}}"
 //        ^ keyword
