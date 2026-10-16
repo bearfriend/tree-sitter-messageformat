@@ -52,6 +52,7 @@ pub const FOLDS_QUERY: &str = include_str!("../../queries/folds.scm");
 /// The content of the `node-types.json` file for the bare-message grammar.
 pub const MESSAGE_NODE_TYPES: &str = include_str!("../../message/src/node-types.json");
 pub const MESSAGE_HIGHLIGHTS_QUERY: &str = include_str!("../../message/queries/highlights.scm");
+pub const MESSAGE_BRACKETS_QUERY: &str = include_str!("../../message/queries/brackets.scm");
 
 #[cfg(test)]
 mod tests {
@@ -123,6 +124,27 @@ mod tests {
         let language: Language = super::LANGUAGE_MESSAGE.into();
         tree_sitter::Query::new(&language, super::MESSAGE_HIGHLIGHTS_QUERY)
             .expect("message highlights query should compile");
+    }
+
+    #[test]
+    fn test_message_brackets_pair_braces_and_tags_but_not_apostrophes() {
+        use streaming_iterator::StreamingIterator;
+        let code = "it's Bob's {n} <b>x</b>";
+        let tree = parse_message(code);
+        let language: Language = super::LANGUAGE_MESSAGE.into();
+        let query = tree_sitter::Query::new(&language, super::MESSAGE_BRACKETS_QUERY)
+            .expect("message brackets query should compile");
+        let mut cursor = tree_sitter::QueryCursor::new();
+        let mut pairs = Vec::new();
+        let mut matches = cursor.matches(&query, tree.root_node(), code.as_bytes());
+        while let Some(m) = matches.next() {
+            let open = m.captures()[0].node;
+            let close = m.captures()[1].node;
+            pairs.push((&code[open.byte_range()], &code[close.byte_range()]));
+        }
+        assert!(pairs.contains(&("{", "}")), "{pairs:?}");
+        assert!(pairs.contains(&("<", ">")), "{pairs:?}");
+        assert!(pairs.iter().all(|(o, _)| *o != "'"), "{pairs:?}");
     }
 
     #[test]
