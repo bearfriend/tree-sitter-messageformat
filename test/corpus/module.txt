@@ -1,0 +1,140 @@
+================================================================================
+Export default wrapper
+================================================================================
+
+export default {
+	a: `b {c}`,
+	"b": "x"
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (placeholder
+          (identifier)))))
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (quoted_string)))
+  (module_end))
+
+================================================================================
+Export default wrapper without semicolon
+================================================================================
+
+export default {
+	a: "x"
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (module_end))
+
+================================================================================
+Export default empty
+================================================================================
+
+export default {};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (module_end))
+
+================================================================================
+Export default with comments
+================================================================================
+
+// header
+export default {
+	// first
+	a: "x",
+	// second
+	b: "y"
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (module_start)
+  (comment)
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (comment)
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (module_end))
+
+================================================================================
+Export default realistic plural
+================================================================================
+
+export default {
+	a: `b {c} '{d}' {num, number, percent}`,
+	"c": `{guestCount, plural, offset:1 =0 {No guests} one {{guestCount} guest} other {{guestCount} guests}}`
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (placeholder
+          (identifier))
+        (escaped_char)
+        (complex_message
+          (identifier)
+          (style_format)))))
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (template_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (offset
+                (number))
+              (plural_case
+                (plural_key
+                  (number))
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (placeholder
+                    (identifier))))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (placeholder
+                    (identifier))))))))))
+  (module_end))

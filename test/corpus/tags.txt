@@ -1,0 +1,109 @@
+================================================================================
+Self-closing tag
+================================================================================
+
+a: "line<br/>break"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (tag
+          (identifier))))))
+
+================================================================================
+Self-closing tag in template
+================================================================================
+
+a: `x <br/> y {name}`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (tag
+          (identifier))
+        (placeholder
+          (identifier))))))
+
+================================================================================
+Self-closing tag in case body
+================================================================================
+
+a: "{n, plural, one {a<br/>b} other {c}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (tag
+                    (identifier))))
+              (plural_case
+                (plural_key)
+                (plural_case_body)))))))))
+
+================================================================================
+Opening and closing tags with placeholder
+================================================================================
+
+a: "<b>{name}</b>"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (tag
+          (identifier))
+        (placeholder
+          (identifier))
+        (tag
+          (identifier))))))
+
+================================================================================
+Nested tags
+================================================================================
+
+a: "<b><i>{name}</i></b>"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (tag
+          (identifier))
+        (tag
+          (identifier))
+        (placeholder
+          (identifier))
+        (tag
+          (identifier))
+        (tag
+          (identifier))))))

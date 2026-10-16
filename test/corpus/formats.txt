@@ -1,0 +1,307 @@
+================================================================================
+Date with no style
+================================================================================
+
+a: "{d, date}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier))))))
+
+================================================================================
+Time with style
+================================================================================
+
+a: "{d, time, short}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier)
+          (style_format))))))
+
+================================================================================
+Date with long style
+================================================================================
+
+a: "{d, date, long}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier)
+          (style_format))))))
+
+================================================================================
+Number with integer style
+================================================================================
+
+a: "{n, number, integer}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier)
+          (style_format))))))
+
+================================================================================
+Number with skeleton
+================================================================================
+
+a: "{n, number, ::currency/USD compact-short}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))))))
+
+================================================================================
+Date with skeleton
+================================================================================
+
+a: "{d, date, ::yyyyMMdd}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))))))
+
+================================================================================
+Plural with zero few many keys
+================================================================================
+
+a: "{n, plural, zero {z} one {o} two {t} few {f} many {m} other {x}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body)))))))))
+
+================================================================================
+Plural without whitespace
+================================================================================
+
+a: "{n,plural,one{x}other{y}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body)))))))))
+
+================================================================================
+Pound inside nested placeholder case
+================================================================================
+
+a: "{n, plural, one {# {x}} other {# {y}}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)
+                  (placeholder
+                    (identifier))))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)
+                  (placeholder
+                    (identifier)))))))))))
+
+================================================================================
+Selectordinal with exact match
+================================================================================
+
+a: "{n, selectordinal, =1 {first} one {#st} two {#nd} few {#rd} other {#th}}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (selectordinal)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder))))))))))
+
+================================================================================
+Select inside tag content
+================================================================================
+
+a: "<b>{g, select, male {He} other {They}}</b>"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (tag
+          (identifier))
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (select_case_body))
+              (select_case
+                (select_key)
+                (select_case_body)))))
+        (tag
+          (identifier))))))
+
+================================================================================
+Escaped quote in string
+================================================================================
+
+a: "say \"hi\" {name}"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string
+        (placeholder
+          (identifier))))))
+
+================================================================================
+Quoted key with dot
+================================================================================
+
+"a.b": "x"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (quoted_string))))

@@ -1,6 +1,7 @@
 ; Define scopes
 (source_file) @local.scope
-(case_body) @local.scope
+(plural_case_body) @local.scope
+(select_case_body) @local.scope
 (resource) @local.scope
 
 ; Variable definitions - identifiers in placeholders and complex messages

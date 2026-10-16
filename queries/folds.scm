@@ -2,7 +2,8 @@
 (selector) @fold
 
 ; Fold case bodies
-(case_body) @fold
+(plural_case_body) @fold
+(select_case_body) @fold
 
 ; Fold multi-line quoted strings
 (quoted_string) @fold

@@ -5,12 +5,18 @@
 (key (identifier) @property)
 (key (quoted_string) @property)
 
-; String literals
-(quoted_string) @string
-(template_string) @string
+; String literals (keys are captured separately as @property)
+(value (quoted_string) @string)
+(value (template_string) @string)
+(plural_case_body (quoted_string) @string)
+(plural_case_body (template_string) @string)
+(select_case_body (quoted_string) @string)
+(select_case_body (template_string) @string)
 
-; Identifiers (variables)
-(identifier) @variable
+; Identifiers (variables) -- scoped by parent so they never overlap
+; with keys (@property), select keys (@constant) or tags (@tag)
+(complex_message (identifier) @variable)
+(selector (identifier) @variable)
 
 ; Placeholders
 (placeholder (identifier) @variable.parameter)
@@ -26,15 +32,15 @@
 ; Plural case keywords
 (plural_key ["zero" "one" "two" "few" "many" "other"]) @constant.builtin
 
-; Select keys
+; Select keys (`other` is the required fallback, like in plural)
 (select_key (identifier) @constant)
+(select_key "other" @constant.builtin)
 
 ; Numbers
-;(number) @number
+(number) @number
 
 ; Offset keyword and value
 "offset:" @keyword
-(offset (number) @number)
 
 ; Style formats
 (style_format) @constant.builtin
@@ -43,15 +49,20 @@
 (skeleton_format "::" @operator)
 (skeleton_pattern) @string.special
 
+; Module wrapper (`export default { ... };`)
+["export" "default"] @keyword
+(module_start "{" @punctuation.bracket)
+(module_end "}" @punctuation.bracket)
+(module_end ";" @punctuation.delimiter)
+
 ; Pound placeholder
 (pound_placeholder) @variable.builtin
 
 ; Tags
 (tag (identifier) @tag)
 
-; Escaped characters
-;(escaped_char) @string.escape
-;(quoted_literal) @string.escape
+; Escaped characters (`'{'`, `''`, ...)
+(escaped_char) @string.escape
 
 ; Operators and punctuation
 "=" @operator
@@ -62,9 +73,7 @@
 "<" @punctuation.bracket
 ">" @punctuation.bracket
 "/" @operator
-"::" @operator
 
-; String delimiters
+; String delimiters (a bare `'` is plain text or part of an escape, never a delimiter)
 "\"" @punctuation.delimiter
 "`" @punctuation.delimiter
-"'" @punctuation.delimiter

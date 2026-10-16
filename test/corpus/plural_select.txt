@@ -20,10 +20,10 @@ items: "{count, plural, =0 {no items} other {# items}}"
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -50,14 +50,14 @@ guests: "{count, plural, offset:1 =0 {no guests} =1 {one guest} other {# guests}
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -81,22 +81,22 @@ comprehensive: "{count, plural, zero {zero items} one {one item} two {two items}
             (plural_rules
               (plural_case
                 (plural_key)
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -121,18 +121,18 @@ position: "You finished {place, selectordinal, =1 {1st} =2 {2nd} =3 {3rd} other 
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -157,15 +157,14 @@ gender: "{person, select, male {He} female {She} other {They}}"
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))))))
+                (select_key)
+                (select_case_body)))))))))
 
 ================================================================================
 Select with quoted strings in cases
@@ -189,17 +188,16 @@ style: "{type, select, good {"cool"} bad {"uncool"} other {"neutral"}}"
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (quoted_string)))
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (quoted_string)))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body
+                (select_key)
+                (select_case_body
                   (quoted_string))))))))))
 
 ================================================================================
@@ -224,18 +222,18 @@ invite: "{count, plural, =0 {No guests invited} =1 {Invited {guest} to {event}} 
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body
+                (plural_case_body
                   (placeholder
                     (identifier))
                   (placeholder
                     (identifier))))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder)
                   (placeholder
                     (identifier)))))))))))
@@ -262,19 +260,18 @@ greeting: "{gender, select, male {Hello Mr. {name}} female {Hello Ms. {name}} ot
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (placeholder
                     (identifier))))
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (placeholder
                     (identifier))))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body
+                (select_key)
+                (select_case_body
                   (placeholder
                     (identifier)))))))))))
 
@@ -302,14 +299,14 @@ attendees: "{going, plural, offset:10 =0 {Nobody is going} =1 {Only you are goin
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -334,27 +331,26 @@ size: "{item, select, small {S} medium {M} large {L} xlarge {XL} xxlarge {XXL} o
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))))))
+                (select_key)
+                (select_case_body)))))))))
 
 ================================================================================
 Plural with exact numbers
@@ -378,18 +374,18 @@ countdown: "{remaining, plural, =0 {Time's up!} =1 {1 second left} =2 {2 seconds
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -413,7 +409,7 @@ minimal: "{n, plural, other {items}}"
             (plural_rules
               (plural_case
                 (plural_key)
-                (case_body)))))))))
+                (plural_case_body)))))))))
 
 ================================================================================
 Minimal select
@@ -435,6 +431,5 @@ choice: "{type, select, other {default}}"
             (select)
             (select_rules
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))))))
+                (select_key)
+                (select_case_body)))))))))

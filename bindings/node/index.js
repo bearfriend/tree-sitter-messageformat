@@ -6,8 +6,9 @@ const binding =
     ? require(`../../prebuilds/${process.platform}-${process.arch}/tree-sitter-messageformat.node`)
     : require("node-gyp-build")(root);
 
-// Export the language object directly
-module.exports = binding.language();
+// The exported object must be extensible: node-tree-sitter attaches
+// `nodeSubclasses` to it, which silently fails on a bare (frozen) External.
+module.exports = binding;
 
 try {
   module.exports.nodeTypeInfo = require("../../src/node-types.json");

@@ -51,6 +51,16 @@
     }
   },
   {
+    "type": "module_end",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "module_start",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "offset",
     "named": true,
     "fields": {},
@@ -362,7 +372,11 @@
       "required": false,
       "types": [
         {
-          "type": "comment",
+          "type": "module_end",
+          "named": true
+        },
+        {
+          "type": "module_start",
           "named": true
         },
         {
@@ -467,6 +481,10 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
@@ -493,6 +511,14 @@
   },
   {
     "type": "date",
+    "named": false
+  },
+  {
+    "type": "default",
+    "named": false
+  },
+  {
+    "type": "export",
     "named": false
   },
   {

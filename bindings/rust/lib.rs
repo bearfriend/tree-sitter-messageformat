@@ -33,12 +33,11 @@ pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_messa
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers/6-static-node-types
 pub const NODE_TYPES: &str = include_str!("../../src/node-types.json");
 
-// NOTE: uncomment these to include any queries that this grammar contains:
-
-// pub const HIGHLIGHTS_QUERY: &str = include_str!("../../queries/highlights.scm");
-// pub const INJECTIONS_QUERY: &str = include_str!("../../queries/injections.scm");
-// pub const LOCALS_QUERY: &str = include_str!("../../queries/locals.scm");
-// pub const TAGS_QUERY: &str = include_str!("../../queries/tags.scm");
+pub const HIGHLIGHTS_QUERY: &str = include_str!("../../queries/highlights.scm");
+pub const INJECTIONS_QUERY: &str = include_str!("../../queries/injections.scm");
+pub const LOCALS_QUERY: &str = include_str!("../../queries/locals.scm");
+pub const TAGS_QUERY: &str = include_str!("../../queries/tags.scm");
+pub const FOLDS_QUERY: &str = include_str!("../../queries/folds.scm");
 
 #[cfg(test)]
 mod tests {
@@ -204,7 +203,94 @@ mod tests {
         let mut parser = setup_parser();
         let code = "items: \"{count, plural, offset:1 =0 {no items} =1 {one item} other {# items}}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
+    }
+
+    fn sexp(code: &str) -> String {
+        let tree = setup_parser().parse(code, None).expect("Failed to parse");
+        assert!(!tree.root_node().has_error(), "unexpected error in: {code}");
+        tree.root_node().to_sexp()
+    }
+
+    #[test]
+    fn test_plural_structure() {
+        assert_eq!(
+            sexp(r#"a: "{n, plural, one {x} other {y}}""#),
+            "(source_file (resource (key (identifier)) (value (quoted_string (complex_message \
+             (selector (identifier) (plural) (plural_rules \
+             (plural_case (plural_key) (plural_case_body)) \
+             (plural_case (plural_key) (plural_case_body)))))))))"
+        );
+    }
+
+    #[test]
+    fn test_placeholder_structure() {
+        assert_eq!(
+            sexp(r#"a: "Hi {name}""#),
+            "(source_file (resource (key (identifier)) (value (quoted_string (placeholder (identifier))))))"
+        );
+    }
+
+    #[test]
+    fn test_self_closing_tag() {
+        assert_eq!(
+            sexp(r#"a: "x<br/>y""#),
+            "(source_file (resource (key (identifier)) (value (quoted_string (tag (identifier))))))"
+        );
+    }
+
+    #[test]
+    fn test_export_default_wrapper() {
+        let code = "export default {\n\ta: \"x\",\n\tb: `{n}`\n};\n";
+        assert_eq!(
+            sexp(code),
+            "(source_file (module_start) \
+             (resource (key (identifier)) (value (quoted_string))) \
+             (resource (key (identifier)) (value (template_string (placeholder (identifier))))) \
+             (module_end))"
+        );
+    }
+
+    #[test]
+    fn test_invalid_inputs_report_errors() {
+        let mut parser = setup_parser();
+        for code in [
+            "a: \"unterminated",
+            "a: \"{n, plural, one {x}\"",
+            "a: \"{n, plural, one x}\"",
+            "a \"missing colon\"",
+            "a: \"{}\"",
+            "a: unquoted value",
+        ] {
+            let tree = parser.parse(code, None).expect("Failed to parse");
+            assert!(tree.root_node().has_error(), "expected an error for: {code}");
+        }
+    }
+
+    #[test]
+    fn test_queries_compile() {
+        let language: Language = super::LANGUAGE.into();
+        for (name, source) in [
+            ("highlights", super::HIGHLIGHTS_QUERY),
+            ("injections", super::INJECTIONS_QUERY),
+            ("locals", super::LOCALS_QUERY),
+            ("tags", super::TAGS_QUERY),
+            ("folds", super::FOLDS_QUERY),
+        ] {
+            tree_sitter::Query::new(&language, source)
+                .unwrap_or_else(|e| panic!("{name}.scm failed to compile: {e}"));
+        }
+    }
+
+    #[test]
+    fn test_fixture_parses_without_errors() {
+        let mut parser = setup_parser();
+        let code = include_str!("../../test/fixtures/messages.msg");
+        let tree = parser.parse(code, None).expect("Failed to parse");
+        assert!(!tree.root_node().has_error());
+        let sexp = tree.root_node().to_sexp();
+        assert!(sexp.starts_with("(source_file (module_start)"));
+        assert_eq!(sexp.matches("(resource ").count(), 4);
     }
 }

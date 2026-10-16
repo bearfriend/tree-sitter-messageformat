@@ -20,7 +20,7 @@ status: "{user, select, admin {Admin has {count, plural, =0 {no tasks} other {# 
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (complex_message
                     (selector
                       (identifier)
@@ -29,15 +29,14 @@ status: "{user, select, admin {Admin has {count, plural, =0 {no tasks} other {# 
                         (plural_case
                           (plural_key
                             (number))
-                          (case_body))
+                          (plural_case_body))
                         (plural_case
                           (plural_key)
-                          (case_body
+                          (plural_case_body
                             (pound_placeholder))))))))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))))))
+                (select_key)
+                (select_case_body)))))))))
 
 ================================================================================
 Deep nesting with multiple message types
@@ -61,7 +60,7 @@ complex: "{type, select, user {User {name} has {count, plural, =0 {no {item, sel
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (placeholder
                     (identifier))
                   (complex_message
@@ -72,7 +71,7 @@ complex: "{type, select, user {User {name} has {count, plural, =0 {no {item, sel
                         (plural_case
                           (plural_key
                             (number))
-                          (case_body
+                          (plural_case_body
                             (complex_message
                               (selector
                                 (identifier)
@@ -81,23 +80,21 @@ complex: "{type, select, user {User {name} has {count, plural, =0 {no {item, sel
                                   (select_case
                                     (select_key
                                       (identifier))
-                                    (case_body))
+                                    (select_case_body))
                                   (select_case
                                     (select_key
                                       (identifier))
-                                    (case_body))
+                                    (select_case_body))
                                   (select_case
-                                    (select_key
-                                      (identifier))
-                                    (case_body)))))))
+                                    (select_key)
+                                    (select_case_body)))))))
                         (plural_case
                           (plural_key)
-                          (case_body
+                          (plural_case_body
                             (pound_placeholder))))))))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))))))
+                (select_key)
+                (select_case_body)))))))))
 
 ================================================================================
 Mixed formatting with skeleton patterns
@@ -155,7 +152,7 @@ notification: `{user, select,
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (placeholder
                     (identifier))
                   (complex_message
@@ -166,29 +163,28 @@ notification: `{user, select,
                         (plural_case
                           (plural_key
                             (number))
-                          (case_body))
+                          (plural_case_body))
                         (plural_case
                           (plural_key
                             (number))
-                          (case_body
+                          (plural_case_body
                             (placeholder
                               (identifier))))
                         (plural_case
                           (plural_key)
-                          (case_body
+                          (plural_case_body
                             (pound_placeholder)
                             (placeholder
                               (identifier)))))))))
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
                   (placeholder
                     (identifier))))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))))))
+                (select_key)
+                (select_case_body)))))))))
 
 ================================================================================
 Selectordinal with complex cases
@@ -212,7 +208,7 @@ ranking: "You finished {place, selectordinal, =1 {1st place! You won {prize, sel
               (plural_case
                 (plural_key
                   (number))
-                (case_body
+                (plural_case_body
                   (complex_message
                     (selector
                       (identifier)
@@ -221,26 +217,25 @@ ranking: "You finished {place, selectordinal, =1 {1st place! You won {prize, sel
                         (select_case
                           (select_key
                             (identifier))
-                          (case_body))
+                          (select_case_body))
                         (select_case
                           (select_key
                             (identifier))
-                          (case_body))
+                          (select_case_body))
                         (select_case
-                          (select_key
-                            (identifier))
-                          (case_body)))))))
+                          (select_key)
+                          (select_case_body)))))))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -265,19 +260,16 @@ mixed: "Status: {status, select, online {You're online and have '{count}' messag
               (select_case
                 (select_key
                   (identifier))
-                (case_body
-                  (escaped_char
-                    (quoted_literal))))
+                (select_case_body
+                  (escaped_char)))
               (select_case
                 (select_key
                   (identifier))
-                (case_body))
+                (select_case_body))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))
-        (escaped_char
-          (quoted_literal))))))
+                (select_key)
+                (select_case_body)))))
+        (escaped_char)))))
 
 ================================================================================
 Offset with multiple exact values
@@ -303,24 +295,24 @@ attendees: "{going, plural, offset:2 =0 {Nobody is going} =1 {Only you are going
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body))
+                (plural_case_body))
               (plural_case
                 (plural_key
                   (number))
-                (case_body
+                (plural_case_body
                   (placeholder
                     (identifier))))
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))
 
 ================================================================================
@@ -337,8 +329,7 @@ escaped_complex: "Display '{count, plural, other {items}}' as literal text, not 
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))
+        (escaped_char)
         (complex_message
           (selector
             (identifier)
@@ -346,7 +337,7 @@ escaped_complex: "Display '{count, plural, other {items}}' as literal text, not 
             (plural_rules
               (plural_case
                 (plural_key)
-                (case_body)))))))))
+                (plural_case_body)))))))))
 
 ================================================================================
 All message types combined
@@ -379,7 +370,7 @@ everything: "Date: {date, date, ::MMM d}, Time: {time, time, short}, Amount: {co
             (plural_rules
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))
         (complex_message
           (selector
@@ -387,9 +378,8 @@ everything: "Date: {date, date, ::MMM d}, Time: {time, time, short}, Amount: {co
             (select)
             (select_rules
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))
+                (select_key)
+                (select_case_body)))))
         (complex_message
           (selector
             (identifier)
@@ -397,5 +387,5 @@ everything: "Date: {date, date, ::MMM d}, Time: {time, time, short}, Amount: {co
             (plural_rules
               (plural_case
                 (plural_key)
-                (case_body
+                (plural_case_body
                   (pound_placeholder))))))))))

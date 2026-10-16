@@ -12,10 +12,8 @@ escaped: "Use '{' and '}' for braces"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)
+        (escaped_char)))))
 
 ================================================================================
 Escaped pound sign
@@ -31,8 +29,7 @@ pound: "Use '#' for pound placeholder"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)))))
 
 ================================================================================
 Escaped tags
@@ -48,10 +45,8 @@ tags: "Use '<' and '>' for tags"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)
+        (escaped_char)))))
 
 ================================================================================
 Double single quotes for literal quote
@@ -115,12 +110,9 @@ mixed: "Say '{' and '}' for braces, '#' for pound, don''t forget"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)
         (escaped_char)))))
 
 ================================================================================
@@ -145,19 +137,16 @@ cases: "{type, select, brace {Use '{'} pound {Use '#'} other {Normal}}"
               (select_case
                 (select_key
                   (identifier))
-                (case_body
-                  (escaped_char
-                    (quoted_literal))))
+                (select_case_body
+                  (escaped_char)))
               (select_case
                 (select_key
                   (identifier))
-                (case_body
-                  (escaped_char
-                    (quoted_literal))))
+                (select_case_body
+                  (escaped_char)))
               (select_case
-                (select_key
-                  (identifier))
-                (case_body)))))))))
+                (select_key)
+                (select_case_body)))))))))
 
 ================================================================================
 Escaping in template strings
@@ -173,10 +162,8 @@ template: `Use '{' and '}' in templates`
       (identifier))
     (value
       (template_string
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)
+        (escaped_char)))))
 
 ================================================================================
 Escaped placeholder in literal
@@ -192,8 +179,7 @@ literal_placeholder: "This shows '{{name}}' literally"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)))))
 
 ================================================================================
 Escaped complex message in literal
@@ -209,8 +195,7 @@ literal_complex: "This shows '{count, plural, other {items}}' literally"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)))))
 
 ================================================================================
 Multiple escapes in sequence
@@ -226,16 +211,11 @@ sequence: "'{' '}' '#' '{' '}'"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)))))
 
 ================================================================================
 Apostrophe contractions
@@ -266,8 +246,7 @@ literal_tag: "Use '<b>' for bold"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)))))
 
 ================================================================================
 Complex escaping with nested structures
@@ -291,18 +270,16 @@ complex_escape: "{type, select, show {Display '{{count, plural, other {items}}}'
               (select_case
                 (select_key
                   (identifier))
-                (case_body
-                  (escaped_char
-                    (quoted_literal))))
-              (select_case
-                (select_key
-                  (identifier))
-                (case_body
+                (select_case_body
                   (escaped_char)))
               (select_case
                 (select_key
                   (identifier))
-                (case_body
+                (select_case_body
+                  (escaped_char)))
+              (select_case
+                (select_key)
+                (select_case_body
                   (placeholder
                     (identifier)))))))))))
 
@@ -320,8 +297,7 @@ empty_escape: "This has '{}' empty braces"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)))))
 
 ================================================================================
 Escaping at string boundaries
@@ -337,7 +313,5 @@ boundaries: "'{start}' and '{end}'"
       (identifier))
     (value
       (quoted_string
-        (escaped_char
-          (quoted_literal))
-        (escaped_char
-          (quoted_literal))))))
+        (escaped_char)
+        (escaped_char)))))

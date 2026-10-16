@@ -16,10 +16,16 @@ module.exports = grammar({
   ],
 
   rules: {
-    source_file: $ => repeat(choice(
-      $.resource,
-      $.comment
-    )),
+    source_file: $ => seq(
+      optional($.module_start),
+      repeat($.resource),
+      optional($.module_end)
+    ),
+
+    // Optional `export default { ... };` wrapper for .msg.js style files
+    module_start: () => seq('export', 'default', '{'),
+
+    module_end: () => seq('}', optional(';')),
 
     comment: () => token(seq('//', /.*/)),
 
@@ -62,7 +68,10 @@ module.exports = grammar({
 
     placeholder: $ => seq('{', $.identifier, '}'),
 
-    tag: $ => seq('<', optional('/'), $.identifier, '>'),
+    tag: $ => seq('<', choice(
+      seq('/', $.identifier),
+      seq($.identifier, optional('/'))
+    ), '>'),
 
     complex_message: $ => choice(
       $.selector,
@@ -138,7 +147,10 @@ module.exports = grammar({
     )), '}'),
 
     select_case_body: $ => seq('{', repeat(choice(
-      /([^{}<>"']|'[^{}<>'])+/,
+      // `#` is plain text in a select, but `'#'` must still reach escaped_char
+      // rather than being swallowed by this regex.
+      /([^{}<>"']|'[^{}<>'#])+/,
+      prec(-1, "'"),
       $.quoted_string,
       $.template_string,
       $.placeholder,
