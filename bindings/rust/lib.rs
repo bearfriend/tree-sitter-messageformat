@@ -119,6 +119,58 @@ mod tests {
         }
     }
 
+    /// The innermost capture name for every byte of `code`, the way an editor resolves
+    /// nested captures (smaller ranges win over the ranges that contain them).
+    fn message_capture_per_byte(code: &str) -> Vec<Option<String>> {
+        use streaming_iterator::StreamingIterator;
+        let tree = parse_message(code);
+        let language: Language = super::LANGUAGE_MESSAGE.into();
+        let query = tree_sitter::Query::new(&language, super::MESSAGE_HIGHLIGHTS_QUERY).unwrap();
+        let mut cursor = tree_sitter::QueryCursor::new();
+        let mut spans = Vec::new();
+        let mut captures = cursor.captures(&query, tree.root_node(), code.as_bytes());
+        while let Some((m, i)) = captures.next() {
+            let c = m.captures()[*i];
+            spans.push((c.node.byte_range(), query.capture_names()[c.index as usize].to_string()));
+        }
+        spans.sort_by_key(|(r, _)| std::cmp::Reverse(r.len()));
+        let mut per_byte = vec![None; code.len()];
+        for (range, name) in spans {
+            for b in range {
+                per_byte[b] = Some(name.clone());
+            }
+        }
+        per_byte
+    }
+
+    #[test]
+    fn test_message_highlights_plain_text_is_a_string() {
+        // Regression: plain text, including text inside plural/select bodies and
+        // between tags, had no capture at all and rendered unhighlighted.
+        let code = "Hello {name}, you have {n, plural, one {# item} other {# items}} \
+                    <b>now</b>! {g, select, male {He} other {They}} left Bob's";
+        let per_byte = message_capture_per_byte(code);
+        for word in ["Hello", "you have", "item", "items", "now", "!", "He", "They", "left", "Bob", "'", "s"] {
+            // `rfind`, so `s` and `'` hit the apostrophe at the end, not earlier letters.
+            let start = code.rfind(word).unwrap_or_else(|| panic!("{word} not in sample"));
+            for b in start..start + word.len() {
+                assert_eq!(
+                    per_byte[b].as_deref(),
+                    Some("string"),
+                    "`{word}` byte {b} ({:?}) is not highlighted as a string",
+                    &code[b..b + 1]
+                );
+            }
+        }
+        // Inner captures still win over the outer string.
+        let at = |needle: &str| per_byte[code.find(needle).unwrap()].as_deref().map(String::from);
+        assert_eq!(at("name"), Some("variable".into()));
+        assert_eq!(at("#"), Some("variable.special".into()));
+        assert_eq!(at("plural"), Some("keyword".into()));
+        assert_eq!(at("{n"), Some("punctuation.bracket".into()));
+        assert_eq!(at("b>"), Some("tag".into()));
+    }
+
     #[test]
     fn test_message_highlights_query_compiles() {
         let language: Language = super::LANGUAGE_MESSAGE.into();
