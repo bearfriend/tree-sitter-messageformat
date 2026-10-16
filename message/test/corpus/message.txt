@@ -1,0 +1,224 @@
+================================================================================
+Plain text
+================================================================================
+
+Hello, world!
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text))
+
+================================================================================
+Placeholder
+================================================================================
+
+Hello {name}!
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (placeholder
+    (identifier))
+  (text))
+
+================================================================================
+Plural with pound
+================================================================================
+
+You have {n, plural, =0 {no items} one {# item} other {# items}}.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (complex_message
+    (selector
+      (identifier)
+      (plural)
+      (plural_rules
+        (plural_case
+          (plural_key
+            (number))
+          (plural_case_body))
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder)))
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder))))))
+  (text))
+
+================================================================================
+Select, tag and escape
+================================================================================
+
+{g, select, male {He} other {They}} said <b>'{hi}'</b> it''s fine
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (complex_message
+    (selector
+      (identifier)
+      (select)
+      (select_rules
+        (select_case
+          (select_key
+            (identifier))
+          (select_case_body))
+        (select_case
+          (select_key)
+          (select_case_body)))))
+  (text)
+  (tag
+    (identifier))
+  (escaped_char)
+  (tag
+    (identifier))
+  (text)
+  (escaped_char)
+  (text))
+
+================================================================================
+Formats
+================================================================================
+
+{n, number, percent} on {d, date, ::yyyyMMMd} at {t, time, short}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (complex_message
+    (identifier)
+    (style_format))
+  (text)
+  (complex_message
+    (identifier)
+    (skeleton_format
+      (skeleton_pattern)))
+  (text)
+  (complex_message
+    (identifier)
+    (style_format))
+  (text))
+
+================================================================================
+Slashes are text, not comments
+================================================================================
+
+See http://example.com {n}// not a comment
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (placeholder
+    (identifier))
+  (text))
+
+================================================================================
+Multiline text
+================================================================================
+
+line one
+  {a}
+line two
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (placeholder
+    (identifier))
+  (text))
+
+================================================================================
+Nested selectordinal
+================================================================================
+
+{n, selectordinal, one {#st {x}} two {#nd} few {#rd} other {#th}}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (complex_message
+    (selector
+      (identifier)
+      (selectordinal)
+      (plural_rules
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder)
+            (placeholder
+              (identifier))))
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder)))
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder)))
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder))))))
+  (text))
+
+================================================================================
+Trailing apostrophe
+================================================================================
+
+Hello {name}'
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (placeholder
+    (identifier))
+  (text))
+
+================================================================================
+Numeric arguments
+================================================================================
+
+{0} of {1, number, integer}: {2, plural, =0 {none} one {# item} other {# items}}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (text)
+  (placeholder
+    (identifier))
+  (text)
+  (complex_message
+    (identifier)
+    (style_format))
+  (text)
+  (complex_message
+    (selector
+      (identifier)
+      (plural)
+      (plural_rules
+        (plural_case
+          (plural_key
+            (number))
+          (plural_case_body))
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder)))
+        (plural_case
+          (plural_key)
+          (plural_case_body
+            (pound_placeholder))))))
+  (text))

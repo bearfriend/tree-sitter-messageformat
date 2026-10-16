@@ -32,7 +32,7 @@ This parser provides syntax highlighting and parsing support for MessageFormat f
   - Code folding for complex messages
   - Symbol navigation and tagging
   - Local variable scoping
-  - Language injection queries (experimental; `queries/injections.scm`)
+  - Injection queries for embedding MessageFormat in other languages (see [Embedding in other languages](#embedding-in-other-languages))
 
 ## Installation
 
@@ -82,10 +82,8 @@ console.log(tree.rootNode.toString());
 ## File Extensions
 
 `tree-sitter.json` associates these file types with the grammar:
-- `.msg`
-- `.msg.js`
-- `.msg.json`
-- `.messages`
+- `.mf`
+- `.mf.js`
 
 ## Syntax Examples
 
@@ -134,6 +132,36 @@ status: "{user, select, admin {Admin {name} has {count, plural, =0 {no tasks} ot
 escaped: "Use '{' and '}' for literal braces, '#' for pound"
 ```
 
+## Embedding in other languages
+
+MessageFormat strings usually live inside another language's string literals. This repo ships what an editor needs to highlight them there.
+
+**1. A second grammar, `messageformat_message`** (in [`message/`](message)). The main grammar is rooted at a `key: "value"` resource file, so a bare string such as `You have {n, plural, ...}` doesn't parse with it. The message grammar reuses every rule but is rooted at one bare message. Its highlights are in `message/queries/highlights.scm`. In Rust it is `tree_sitter_messageformat::LANGUAGE_MESSAGE`.
+
+**2. Host injection queries** in [`injections/`](injections). Each file is meant to be *added to* the host language's own `injections` query (Neovim `; extends`, Helix `; inherits`, ...), not to replace it:
+
+| File | Host | Triggers |
+|------|------|----------|
+| `javascript.scm` | JavaScript, TypeScript, TSX | `{arg, plural\|select\|...}` in a string; `new IntlMessageFormat(...)`; `formatMessage(...)`; `{ defaultMessage: ... }`; `/* icu */ "..."` |
+| `jsx.scm` | JavaScript, TSX (not plain TypeScript) | `defaultMessage="..."` and ICU-shaped JSX attribute values |
+| `json.scm` | JSON (FormatJS, Chrome `messages.json`, Flutter `.arb`) | ICU-shaped values; `"message"` / `"defaultMessage"` members |
+| `html.scm` | HTML | ICU-shaped text and attribute values |
+| `java.scm` | Java (`java.text`, ICU4J, `android.icu`) | ICU-shaped strings; `new MessageFormat(...)`; `MessageFormat.format(...)` |
+| `kotlin.scm` | Kotlin (Android, Multiplatform) | same as Java |
+| `swift.scm` | Swift (iOS / macOS) | ICU-shaped strings only; Swift has no built-in ICU API |
+
+A plain `"Hello {name}"` is **not** injected unless a known call or key makes the intent clear, because such strings are too common in ordinary code. "ICU-shaped" means containing `{name, plural|select|selectordinal|number|date|time ...`.
+
+Every query is tested against the real host grammar (`cargo test --test injections`): the exact set of injected strings is asserted using the fixtures in `test/host-injections/`, and every injected string must parse without errors.
+
+### Zed
+
+Zed cannot use these yet. Zed reads injections only from the *host* language's own `injections.scm`, and an extension can't add rules to a built-in language (see [zed#8795](https://github.com/zed-industries/zed/issues/8795) and [zed#65382](https://github.com/zed-industries/zed/issues/65382)). The files in `injections/` are written so they can be proposed to Zed's built-in languages, or adopted if Zed adds a mechanism for extensions.
+
+### Not the same as `queries/injections.scm`
+
+`queries/injections.scm` is for injections *inside* a MessageFormat file (for example, what to do with a template string). It is unrelated to the host injections above.
+
 ## Editor Integration
 
 ### Zed
@@ -166,7 +194,7 @@ Use the [MessageFormat extension](https://github.com/bearfriend/messageformat-ze
 
 ```bash
 npm install            # builds the Node binding from source
-npm run generate       # regenerate src/parser.c after editing grammar.js
+npm run generate       # regenerate src/parser.c and message/src/parser.c after editing grammar.js
 npm test               # Node binding tests + corpus + highlight tests
 cargo test             # Rust binding tests
 ```
@@ -174,6 +202,8 @@ cargo test             # Rust binding tests
 Tests live in:
 - `test/corpus/` &mdash; parse-tree tests (`tree-sitter test`)
 - `test/highlight/` &mdash; highlight assertions (run by `tree-sitter test`)
+- `message/test/corpus/` &mdash; parse-tree tests for the bare-message grammar (`npm run test:message`)
+- `test/host-injections/` &mdash; host-language fixtures for the injection queries (`cargo test --test injections`)
 - `test/fixtures/` &mdash; fixtures used by the binding tests
 - `test/manual/` &mdash; larger sample files for trying things out with `tree-sitter parse` / `tree-sitter highlight`; not run automatically
 

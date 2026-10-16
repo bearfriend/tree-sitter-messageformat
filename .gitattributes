@@ -4,6 +4,9 @@
 src/*.json linguist-generated
 src/parser.c linguist-generated
 src/tree_sitter/* linguist-generated
+message/src/*.json linguist-generated
+message/src/parser.c linguist-generated
+message/src/tree_sitter/* linguist-generated
 
 # Rust bindings
 bindings/rust/* linguist-generated

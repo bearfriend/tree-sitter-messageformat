@@ -1,0 +1,7 @@
+{
+  "plural": "{count, plural, one {# file} other {# files}}",
+  "message": "Plain {name} here",
+  "defaultMessage": "Hi {who}",
+  "title": "Not a message {x}",
+  "list": ["{n, number} items", "plain"]
+}

@@ -22,14 +22,17 @@ jobs:
 
       - name: Generated parser is up to date
         run: |
-          npx tree-sitter generate
-          git diff --exit-code -- src
+          npm run generate
+          git diff --exit-code -- src message/src
 
       - name: Corpus and highlight tests
         run: npx tree-sitter test
 
+      - name: Message grammar corpus tests
+        run: npm run test:message
+
       - name: Node binding tests
         run: node --test bindings/node/*_test.js
 
-      - name: Rust binding tests
+      - name: Rust binding and injection query tests
         run: cargo test

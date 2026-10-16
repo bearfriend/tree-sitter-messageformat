@@ -24,6 +24,9 @@
     "bindings/node/*",
     "queries/*",
     "src/**",
+    "message/grammar.js",
+    "message/src/**",
+    "message/queries/*",
     "*.wasm"
   ],
   "dependencies": {
@@ -47,9 +50,10 @@
     "install": "node-gyp-build",
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js && tree-sitter test",
+    "test": "node --test bindings/node/*_test.js && tree-sitter test && npm run test:message",
     "test:grammar": "tree-sitter test",
-    "generate": "tree-sitter generate",
+    "test:message": "cd message && tree-sitter test",
+    "generate": "tree-sitter generate && cd message && tree-sitter generate",
     "build": "tree-sitter build",
     "highlight": "tree-sitter highlight"
   }

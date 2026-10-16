@@ -17,6 +17,9 @@ include = [
   "grammar.js",
   "queries/*",
   "src/*",
+  "message/grammar.js",
+  "message/src/*",
+  "message/queries/*",
   "tree-sitter.json",
   "LICENSE",
 ]
@@ -32,3 +35,12 @@ cc = "1.8"
 
 [dev-dependencies]
 tree-sitter = "0.27.1"
+streaming-iterator = "0.1"
+# Host languages used to test the injection queries in `injections/`.
+tree-sitter-html = "0.23.2"
+tree-sitter-java = "0.23.5"
+tree-sitter-javascript = "0.25.0"
+tree-sitter-json = "0.24.8"
+tree-sitter-kotlin-ng = "1.1.0"
+tree-sitter-swift = "0.7.4"
+tree-sitter-typescript = "0.23.2"

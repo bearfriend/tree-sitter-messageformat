@@ -23,10 +23,20 @@ use tree_sitter_language::LanguageFn;
 
 extern "C" {
     fn tree_sitter_messageformat() -> *const ();
+    fn tree_sitter_messageformat_message() -> *const ();
 }
 
 /// The tree-sitter [`LanguageFn`] for this grammar.
 pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_messageformat) };
+
+/// The tree-sitter [`LanguageFn`] for the bare-message grammar.
+///
+/// It shares all rules with [`LANGUAGE`] but its root is a single message
+/// (text, placeholders, plural/select, tags) instead of a `key: value` resource
+/// file, which is what the contents of a string literal in another language is.
+/// Use it for language injections.
+pub const LANGUAGE_MESSAGE: LanguageFn =
+    unsafe { LanguageFn::from_raw(tree_sitter_messageformat_message) };
 
 /// The content of the [`node-types.json`] file for this grammar.
 ///
@@ -38,6 +48,10 @@ pub const INJECTIONS_QUERY: &str = include_str!("../../queries/injections.scm");
 pub const LOCALS_QUERY: &str = include_str!("../../queries/locals.scm");
 pub const TAGS_QUERY: &str = include_str!("../../queries/tags.scm");
 pub const FOLDS_QUERY: &str = include_str!("../../queries/folds.scm");
+
+/// The content of the `node-types.json` file for the bare-message grammar.
+pub const MESSAGE_NODE_TYPES: &str = include_str!("../../message/src/node-types.json");
+pub const MESSAGE_HIGHLIGHTS_QUERY: &str = include_str!("../../message/queries/highlights.scm");
 
 #[cfg(test)]
 mod tests {
@@ -53,6 +67,62 @@ mod tests {
     #[test]
     fn test_can_load_grammar() {
         setup_parser();
+    }
+
+    fn parse_message(code: &str) -> tree_sitter::Tree {
+        let mut parser = Parser::new();
+        let language: Language = super::LANGUAGE_MESSAGE.into();
+        parser.set_language(&language).expect("Error loading message parser");
+        parser.parse(code, None).expect("Failed to parse")
+    }
+
+    #[test]
+    fn test_message_grammar_parses_bare_messages() {
+        for code in [
+            "Hello, world!",
+            "Hello {name}!",
+            "{0} of {1, number, integer}",
+            "{n, plural, one {# item} other {# items}} <b>x</b> it''s '{x}'",
+            "See http://example.com for details",
+        ] {
+            let tree = parse_message(code);
+            assert!(!tree.root_node().has_error(), "{code}: {}", tree.root_node().to_sexp());
+        }
+    }
+
+    #[test]
+    fn test_message_grammar_is_not_a_resource_file_grammar() {
+        let tree = parse_message("greeting: \"Hello {name}!\"");
+        assert_eq!(tree.root_node().kind(), "source_file");
+        let sexp = tree.root_node().to_sexp();
+        assert!(!sexp.contains("(resource"), "{sexp}");
+        assert!(sexp.contains("(placeholder"), "{sexp}");
+    }
+
+    #[test]
+    fn test_message_highlights_capture_expected_nodes() {
+        use streaming_iterator::StreamingIterator;
+        let code = "Hi {n, plural, one {# it} other {# its}} <b>x</b> it''s";
+        let tree = parse_message(code);
+        let language: Language = super::LANGUAGE_MESSAGE.into();
+        let query = tree_sitter::Query::new(&language, super::MESSAGE_HIGHLIGHTS_QUERY).unwrap();
+        let mut cursor = tree_sitter::QueryCursor::new();
+        let mut seen = std::collections::BTreeSet::new();
+        let mut captures = cursor.captures(&query, tree.root_node(), code.as_bytes());
+        while let Some((m, i)) = captures.next() {
+            let c = m.captures()[*i];
+            seen.insert((query.capture_names()[c.index as usize].to_string(), code[c.node.byte_range()].to_string()));
+        }
+        for expected in [("variable", "n"), ("keyword", "plural"), ("variable.special", "#"), ("tag", "b"), ("string.escape", "''")] {
+            assert!(seen.contains(&(expected.0.to_string(), expected.1.to_string())), "missing {expected:?} in {seen:?}");
+        }
+    }
+
+    #[test]
+    fn test_message_highlights_query_compiles() {
+        let language: Language = super::LANGUAGE_MESSAGE.into();
+        tree_sitter::Query::new(&language, super::MESSAGE_HIGHLIGHTS_QUERY)
+            .expect("message highlights query should compile");
     }
 
     #[test]

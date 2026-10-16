@@ -7,9 +7,9 @@
       "title": "messageformat",
       "scope": "source.messageformat",
       "file-types": [
+        "mf",
+        "mf.js",
         "msg",
-        "msg.js",
-        "msg.json",
         "messages"
       ],
       "injection-regex": "^messageformat$",
@@ -17,7 +17,19 @@
       "highlights": "queries/highlights.scm",
       "injections": "queries/injections.scm",
       "locals": "queries/locals.scm",
-      "tags": "queries/tags.scm"
+      "tags": "queries/tags.scm",
+      "path": "."
+    },
+    {
+      "name": "messageformat_message",
+      "camelcase": "MessageFormatMessage",
+      "title": "messageformat message",
+      "scope": "source.messageformat.message",
+      "path": "message",
+      "file-types": [],
+      "injection-regex": "^messageformat_message$",
+      "class-name": "TreeSitterMessageformatMessage",
+      "highlights": "message/queries/highlights.scm"
     }
   ],
   "metadata": {
