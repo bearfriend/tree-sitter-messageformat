@@ -136,7 +136,7 @@ escaped: "Use '{' and '}' for literal braces, '#' for pound"
 
 MessageFormat strings usually live inside another language's string literals. This repo ships what an editor needs to highlight them there.
 
-**1. A second grammar, `messageformat_message`** (in [`message/`](message)). The main grammar is rooted at a `key: "value"` resource file, so a bare string such as `You have {n, plural, ...}` doesn't parse with it. The message grammar reuses every rule but is rooted at one bare message. Its highlights are in `message/queries/highlights.scm`. In Rust it is `tree_sitter_messageformat::LANGUAGE_MESSAGE`.
+**1. A second grammar, `messageformat_message`** (in [`message/`](message)). The main grammar is rooted at a `key: "value"` resource file, so a bare string such as `You have {n, plural, ...}` doesn't parse with it. The message grammar reuses every rule but is rooted at one bare message. Its queries are in `message/queries/` (`highlights.scm`, `brackets.scm`). In Rust it is `tree_sitter_messageformat::LANGUAGE_MESSAGE`.
 
 **2. Host injection queries** in [`injections/`](injections). Each file is meant to be *added to* the host language's own `injections` query (Neovim `; extends`, Helix `; inherits`, ...), not to replace it:
 
@@ -166,7 +166,7 @@ Zed cannot use these yet. Zed reads injections only from the *host* language's o
 
 ### Zed
 
-Use the [MessageFormat extension](https://github.com/bearfriend/messageformat-zed). It pins a commit of this grammar and ships its own copies of `queries/highlights.scm` and `queries/brackets.scm`; see that repository's README for the sync process.
+Use the [MessageFormat extension](https://github.com/bearfriend/messageformat-zed). It registers both grammars from this repo (`messageformat` and, via `path = "message"`, `messageformat_message`), pins one commit for both, and ships its own copies of `highlights.scm` and `brackets.scm` from `queries/` and `message/queries/`; see that repository's README for the sync process. A Zed extension cannot add injections to built-in languages, so the host queries in `injections/` don't work in Zed yet.
 
 ## Highlighting Classes
 
