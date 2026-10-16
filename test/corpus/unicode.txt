@@ -1,0 +1,89 @@
+================================================================================
+Arabic plural keys in a module
+================================================================================
+
+export default {
+	peopleHere: `{people, plural,
+		=0 {لا أحد هنا}
+		one {هناك شخص واحد هنا}
+		few {هناك # أشخاص هنا}
+		many {هناك # أشخاص هنا}
+		other {هناك # شخص هنا}
+	}`,
+	fishInTheOcean: `{fish, plural,
+		=0 {لا يوجد سمك في المحيط}
+		other {هناك # سمكة في المحيط}
+	}`
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))))))))
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))))))))
+  (module_end))
+
+================================================================================
+Non-ASCII text and curly apostrophe
+================================================================================
+
+birthday: `{animalName} the octopus’s birthday is on {birthday, date}. Café ☕ 日本語`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (placeholder
+          (identifier))
+        (complex_message
+          (identifier))))))

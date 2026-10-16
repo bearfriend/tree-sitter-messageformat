@@ -1,6 +1,6 @@
 /**
  * @file messageformat parser
- * @author Danny Gleckle <daniel.gleckler@gmail.com>
+ * @author Danny Gleckler <daniel.gleckler@gmail.com>
  * @license MIT
  */
 

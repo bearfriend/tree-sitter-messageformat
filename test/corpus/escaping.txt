@@ -315,3 +315,34 @@ boundaries: "'{start}' and '{end}'"
       (quoted_string
         (escaped_char)
         (escaped_char)))))
+
+================================================================================
+Mixed escapes, pound and tags in text
+================================================================================
+
+escape: `An {argument}'s '{escaped}' with #'' '#'; '<b>'{notEscaped} #'</b>' '<' '}' '' <notEscaped> > '{}' '<>'`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (placeholder
+          (identifier))
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)
+        (placeholder
+          (identifier))
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)
+        (escaped_char)
+        (tag
+          (identifier))
+        (escaped_char)
+        (escaped_char)))))

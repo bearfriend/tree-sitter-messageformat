@@ -7,7 +7,6 @@
       "title": "messageformat",
       "scope": "source.messageformat",
       "file-types": [
-        "xml",
         "msg",
         "msg.js",
         "msg.json",
@@ -27,7 +26,7 @@
     "description": "messageformat parser",
     "authors": [
       {
-        "name": "Danny Gleckle",
+        "name": "Danny Gleckler",
         "email": "daniel.gleckler@gmail.com"
       }
     ],
@@ -36,12 +35,12 @@
     }
   },
   "bindings": {
-    "c": true,
-    "go": true,
+    "c": false,
+    "go": false,
     "node": true,
-    "python": true,
+    "python": false,
     "rust": true,
-    "swift": true,
+    "swift": false,
     "zig": false
   }
 }

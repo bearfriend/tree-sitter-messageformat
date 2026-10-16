@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - run: npm ci
+
+      - name: Generated parser is up to date
+        run: |
+          npx tree-sitter generate
+          git diff --exit-code -- src
+
+      - name: Corpus and highlight tests
+        run: npx tree-sitter test
+
+      - name: Node binding tests
+        run: node --test bindings/node/*_test.js
+
+      - name: Rust binding tests
+        run: cargo test

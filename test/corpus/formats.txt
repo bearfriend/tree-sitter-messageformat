@@ -305,3 +305,32 @@ Quoted key with dot
       (quoted_string))
     (value
       (quoted_string))))
+
+================================================================================
+Skeletons with spaces and single letters
+================================================================================
+
+skeleton: `{animalName} the octopus’s birthday is on {birthday, date, ::cccccMMMMd}. He invited {inviteCount, number, ::K} friends to his party, but only {acceptedShare, number, ::percent .0} can make it.`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (placeholder
+          (identifier))
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))
+        (complex_message
+          (identifier)
+          (skeleton_format
+            (skeleton_pattern)))))))

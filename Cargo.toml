@@ -2,7 +2,7 @@
 name = "tree-sitter-messageformat"
 description = "messageformat parser"
 version = "0.1.0"
-authors = ["Danny Gleckle <daniel.gleckler@gmail.com>"]
+authors = ["Danny Gleckler <daniel.gleckler@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 keywords = ["incremental", "parsing", "tree-sitter", "messageformat"]

@@ -433,3 +433,103 @@ choice: "{type, select, other {default}}"
               (select_case
                 (select_key)
                 (select_case_body)))))))))
+
+================================================================================
+Inline plural and select split by text
+================================================================================
+
+split: `There {thingCount, plural, =0 {are no} other {are #} one {is #}} {type, select, other {"uncool"} neutral {"mid"} good {"cool"}} things at {name}'s house.`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder))))))
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key)
+                (select_case_body
+                  (quoted_string)))
+              (select_case
+                (select_key
+                  (identifier))
+                (select_case_body
+                  (quoted_string)))
+              (select_case
+                (select_key
+                  (identifier))
+                (select_case_body
+                  (quoted_string))))))
+        (placeholder
+          (identifier))))))
+
+================================================================================
+Select with nested placeholders in a multiline template
+================================================================================
+
+select: `{gender, select,
+	male {{animalName} the {animalType} loves his friends}
+	female {{animalName} the {animalType} loves her friends}
+	other {{animalName} the {animalType} loves their friends}
+}`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (resource
+    (key
+      (identifier))
+    (value
+      (template_string
+        (complex_message
+          (selector
+            (identifier)
+            (select)
+            (select_rules
+              (select_case
+                (select_key
+                  (identifier))
+                (select_case_body
+                  (placeholder
+                    (identifier))
+                  (placeholder
+                    (identifier))))
+              (select_case
+                (select_key
+                  (identifier))
+                (select_case_body
+                  (placeholder
+                    (identifier))
+                  (placeholder
+                    (identifier))))
+              (select_case
+                (select_key)
+                (select_case_body
+                  (placeholder
+                    (identifier))
+                  (placeholder
+                    (identifier)))))))))))

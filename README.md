@@ -32,7 +32,7 @@ This parser provides syntax highlighting and parsing support for MessageFormat f
   - Code folding for complex messages
   - Symbol navigation and tagging
   - Local variable scoping
-  - Language injections for nested content
+  - Language injection queries (experimental; `queries/injections.scm`)
 
 ## Installation
 
@@ -56,13 +56,13 @@ npm install
 
 ```bash
 # Parse a file
-tree-sitter parse example.msg
+tree-sitter parse test/manual/test-working.msg
 
 # Test syntax highlighting
-tree-sitter highlight example.msg
+tree-sitter highlight test/manual/test-working.msg
 
 # Generate HTML with highlighting
-tree-sitter highlight example.msg --html > output.html
+tree-sitter highlight test/manual/test-working.msg --html > output.html
 ```
 
 ### With Node.js
@@ -81,12 +81,11 @@ console.log(tree.rootNode.toString());
 
 ## File Extensions
 
-The parser recognizes these file extensions:
+`tree-sitter.json` associates these file types with the grammar:
 - `.msg`
 - `.msg.js`
 - `.msg.json`
 - `.messages`
-- `.xml` (when containing MessageFormat content)
 
 ## Syntax Examples
 
@@ -137,87 +136,48 @@ escaped: "Use '{' and '}' for literal braces, '#' for pound"
 
 ## Editor Integration
 
-### Neovim (with nvim-treesitter)
+### Zed
 
-Add to your treesitter configuration:
-
-```lua
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "messageformat" },
-  highlight = {
-    enable = true,
-  },
-}
-```
-
-### Vim (with vim-treesitter)
-
-```vim
-autocmd BufNewFile,BufRead *.msg set filetype=messageformat
-autocmd BufNewFile,BufRead *.msg.js set filetype=messageformat
-```
-
-### VS Code
-
-Install a tree-sitter extension that supports custom grammars, or use the TextMate grammar generated from this parser.
-
-### Emacs
-
-Use `tree-sitter-mode` with this parser for syntax highlighting.
+Use the [MessageFormat extension](https://github.com/bearfriend/messageformat-zed). It pins a commit of this grammar and ships its own copies of `queries/highlights.scm` and `queries/brackets.scm`; see that repository's README for the sync process.
 
 ## Highlighting Classes
 
-The parser provides these semantic highlighting classes:
-
-| Element | Class | Description |
-|---------|-------|-------------|
-| Comments | `comment` | Line comments starting with `//` |
-| Keys | `property` | Resource keys (identifiers and quoted strings) |
-| Strings | `string` | Quoted strings and template strings |
-| Variables | `variable` | General identifiers |
-| Parameters | `variable.parameter` | Variables in placeholders |
-| Keywords | `keyword` | `plural`, `select`, `selectordinal`, `offset:` |
-| Types | `type` | `number`, `date`, `time` |
-| Constants | `constant.builtin` | Plural keywords (`zero`, `one`, etc.) |
-| Numbers | `number` | Numeric literals |
-| Operators | `operator` | `=`, `::`, `/` |
-| Brackets | `punctuation.bracket` | `{`, `}`, `<`, `>` |
-| Delimiters | `punctuation.delimiter` | `:`, `,`, `"`, `'`, `` ` `` |
-| Special | `string.special` | Skeleton format patterns |
-| Escapes | `string.escape` | Escaped characters and literals |
-| Tags | `tag` | HTML-like tags |
-| Pound | `variable.builtin` | `#` placeholder in plurals |
+| Element | Capture | Notes |
+|---------|---------|-------|
+| Comments | `@comment` | Line comments starting with `//` |
+| Resource keys | `@property` | Identifiers and quoted strings |
+| Strings | `@string` | Quoted and template strings (quotes are not captured separately) |
+| Variables | `@variable` | Selector, placeholder and complex-message arguments |
+| Pound placeholder | `@variable.special` | `#` inside plural / selectordinal cases |
+| Keywords | `@keyword` | `plural`, `select`, `selectordinal`, `offset:`, `export`, `default` |
+| Format types | `@type` | `number`, `date`, `time` |
+| Plural keys | `@constant.builtin` | `zero`, `one`, `two`, `few`, `many`, `other` |
+| Select keys | `@constant` | `other` is `@constant.builtin` |
+| Style formats | `@constant.builtin` | e.g. `short`, `long`, `currency` |
+| Numbers | `@number` | Including `=N` plural keys and offsets |
+| Skeleton patterns | `@string.special` | The part after `::` |
+| Escapes | `@string.escape` | `'{'`, `''`, ... |
+| Tags | `@tag` | `<b>`, `</b>`, `<br/>` |
+| Operators | `@operator` | `=`, `::`, `/` |
+| Brackets | `@punctuation.bracket` | `{ } < >` |
+| Delimiters | `@punctuation.delimiter` | `:`, `,`, `"`, `` ` ``, module `;` |
 
 ## Development
 
-### Building
-
 ```bash
-# Generate parser
-npm run generate
-
-# Build for Node.js
-npm run build
-
-# Run tests
-npm test
-
-# Test highlighting
-npm run test:highlight
+npm install            # builds the Node binding from source
+npm run generate       # regenerate src/parser.c after editing grammar.js
+npm test               # Node binding tests + corpus + highlight tests
+cargo test             # Rust binding tests
 ```
 
-### Testing
+Tests live in:
+- `test/corpus/` &mdash; parse-tree tests (`tree-sitter test`)
+- `test/highlight/` &mdash; highlight assertions (run by `tree-sitter test`)
+- `test/fixtures/` &mdash; fixtures used by the binding tests
+- `test/manual/` &mdash; larger sample files for trying things out with `tree-sitter parse` / `tree-sitter highlight`; not run automatically
 
-The parser includes comprehensive tests for:
-- Basic syntax elements
-- Complex nested structures
-- Edge cases and error handling
-- Escaping and special characters
-- All MessageFormat features
-
-```bash
-tree-sitter test
-```
+After changing `grammar.js`, always regenerate with the CLI version pinned in `package.json` (`npx tree-sitter generate`) and commit `src/`.
 
 ## Contributing
 
@@ -229,7 +189,7 @@ tree-sitter test
 
 ## License
 
-MIT License. See LICENSE file for details.
+MIT &copy; 2026 Danny Gleckler. See [LICENSE](LICENSE).
 
 ## Links
 
