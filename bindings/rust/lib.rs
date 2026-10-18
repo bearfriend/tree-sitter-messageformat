@@ -204,7 +204,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "greeting: \"Hello world!\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         let root = tree.root_node();
         assert_eq!(root.kind(), "source_file");
         assert!(!root.has_error());
@@ -216,7 +216,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "greeting: \"Hello, {name}!\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -225,7 +225,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "items: \"{count, plural, =0 {no items} =1 {one item} other {# items}}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -234,7 +234,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "gender: \"{person, select, male {He} female {She} other {They}}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -243,7 +243,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "place: \"{position, selectordinal, =1 {1st} =2 {2nd} =3 {3rd} other {#th}}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -252,7 +252,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "price: \"Cost: {amount, number, currency}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -261,7 +261,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "birthday: \"Born on {date, date, ::MMM d, y}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -270,7 +270,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "escaped: \"Use '{' and '}' for braces\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -279,7 +279,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "multiline: `Hello {name}!\nWelcome back.`";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -288,7 +288,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "name: \"{user}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -297,7 +297,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "greeting: \"Hello!\",\nfarewell: \"Goodbye!\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
         assert!(tree.root_node().child_count() >= 2);
     }
@@ -307,7 +307,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "// This is a comment\ngreeting: \"Hello!\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -316,7 +316,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "nested: \"{count, plural, =0 {no {type, select, email {emails} sms {messages} other {items}}} other {# {type, select, email {emails} sms {messages} other {items}}}}\"";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert!(!tree.root_node().has_error());
     }
 
@@ -337,7 +337,7 @@ mod tests {
         let mut parser = setup_parser();
         let code = "";
         let tree = parser.parse(code, None).expect("Failed to parse");
-        
+
         assert_eq!(tree.root_node().kind(), "source_file");
         assert_eq!(tree.root_node().child_count(), 0);
     }
@@ -430,7 +430,7 @@ mod tests {
     #[test]
     fn test_fixture_parses_without_errors() {
         let mut parser = setup_parser();
-        let code = include_str!("../../test/fixtures/messages.msg");
+        let code = include_str!("../../test/fixtures/messages.mf");
         let tree = parser.parse(code, None).expect("Failed to parse");
         assert!(!tree.root_node().has_error());
         let sexp = tree.root_node().to_sexp();

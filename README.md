@@ -56,13 +56,13 @@ npm install
 
 ```bash
 # Parse a file
-tree-sitter parse test/manual/test-working.msg
+tree-sitter parse test/manual/test-working.mf
 
 # Test syntax highlighting
-tree-sitter highlight test/manual/test-working.msg
+tree-sitter highlight test/manual/test-working.mf
 
 # Generate HTML with highlighting
-tree-sitter highlight test/manual/test-working.msg --html > output.html
+tree-sitter highlight test/manual/test-working.mf --html > output.html
 ```
 
 ### With Node.js

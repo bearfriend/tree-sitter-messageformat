@@ -22,7 +22,7 @@ module.exports = grammar({
       optional($.module_end)
     ),
 
-    // Optional `export default { ... };` wrapper for .msg.js style files
+    // Optional `export default { ... };` wrapper for .mf.js style files
     module_start: () => seq('export', 'default', '{'),
 
     module_end: () => seq('}', optional(';')),
