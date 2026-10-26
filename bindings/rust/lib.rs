@@ -430,7 +430,7 @@ mod tests {
     #[test]
     fn test_fixture_parses_without_errors() {
         let mut parser = setup_parser();
-        let code = include_str!("../../test/fixtures/messages.mf");
+        let code = include_str!("../../test/fixtures/messages.mf.js");
         let tree = parser.parse(code, None).expect("Failed to parse");
         assert!(!tree.root_node().has_error());
         let sexp = tree.root_node().to_sexp();

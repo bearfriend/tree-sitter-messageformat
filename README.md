@@ -113,7 +113,7 @@ gender: "{person, select, male {He} female {She} other {They}} is here"
 
 ### Selectordinal
 ```messageformat
-position: "You finished {place, selectordinal, =1 {1st} =2 {2nd} =3 {3rd} other {#th}}"
+position: "You finished {place, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}"
 ```
 
 ### Template Strings
