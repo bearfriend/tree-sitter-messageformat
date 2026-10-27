@@ -22,8 +22,17 @@ module.exports = grammar({
       optional($.module_end)
     ),
 
-    // Optional `export default { ... };` wrapper for .mf.js style files
-    module_start: () => seq('export', 'default', '{'),
+    // Optional wrapper around the resources:
+    //   .mf.js:   `export { ... }`, `export default { ... }`,
+    //             `export const|let name = { ... }`
+    //   .mf.json: a bare `{ ... }`
+    module_start: $ => seq(
+      optional(seq('export', optional(choice(
+        'default',
+        seq(choice('const', 'let'), $.identifier, '=')
+      )))),
+      '{'
+    ),
 
     module_end: () => seq('}', optional(';')),
 

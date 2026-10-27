@@ -84,6 +84,9 @@ console.log(tree.rootNode.toString());
 `tree-sitter.json` associates these file types with the grammar:
 - `.mf`
 - `.mf.js`
+- `.mf.json`
+
+`.mf.js` files may wrap their entries in `export { ... }`, `export default { ... }`, `export const name = { ... }` or `export let name = { ... }` (a trailing `;` is optional), and `.mf.json` files in a plain `{ ... }` object. All wrappers are parsed as `module_start` / `module_end`; `const` and `let` wrappers expose the variable name as an `identifier` child of `module_start`.
 
 ## Syntax Examples
 
@@ -132,6 +135,14 @@ status: "{user, select, admin {Admin {name} has {count, plural, =0 {no tasks} ot
 escaped: "Use '{' and '}' for literal braces, '#' for pound"
 ```
 
+### JSON Files (`.mf.json`)
+```json
+{
+  "greeting": "Hello {name}!",
+  "items": "{count, plural, =0 {no items} other {# items}}"
+}
+```
+
 ## Embedding in other languages
 
 MessageFormat strings usually live inside another language's string literals. This repo ships what an editor needs to highlight them there.
@@ -177,7 +188,7 @@ Use the [MessageFormat extension](https://github.com/bearfriend/messageformat-ze
 | Strings | `@string` | Quoted and template strings (quotes are not captured separately) |
 | Variables | `@variable` | Selector, placeholder and complex-message arguments |
 | Pound placeholder | `@variable.special` | `#` inside plural / selectordinal cases |
-| Keywords | `@keyword` | `plural`, `select`, `selectordinal`, `offset:`, `export`, `default` |
+| Keywords | `@keyword` | `plural`, `select`, `selectordinal`, `offset:`, and the `export`, `default`, `const`, `let` of a module wrapper |
 | Format types | `@type` | `number`, `date`, `time` |
 | Plural keys | `@constant.builtin` | `zero`, `one`, `two`, `few`, `many`, `other` |
 | Select keys | `@constant` | `other` is `@constant.builtin` |

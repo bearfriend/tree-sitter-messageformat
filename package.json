@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-messageformat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "messageformat parser",
   "repository": "https://github.com/bearfriend/tree-sitter-messageformat",
   "license": "MIT",

@@ -1,0 +1,5 @@
+export {
+// <- keyword
+//     ^ punctuation.bracket
+a: "x"
+};

@@ -138,3 +138,80 @@ export default {
                   (placeholder
                     (identifier))))))))))
   (module_end))
+
+================================================================================
+Bare export wrapper
+================================================================================
+
+export {
+	a: "x"
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (module_end))
+
+================================================================================
+Export const wrapper
+================================================================================
+
+export const messages = {
+	a: "x"
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start
+    (identifier))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (module_end))
+
+================================================================================
+Export let wrapper
+================================================================================
+
+export let messages = {
+	a: "x"
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start
+    (identifier))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (module_end))
+
+================================================================================
+Export const wrapper without semicolon, on one line
+================================================================================
+
+export const messages = { a: "x" }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start
+    (identifier))
+  (resource
+    (key
+      (identifier))
+    (value
+      (quoted_string)))
+  (module_end))

@@ -397,6 +397,46 @@ mod tests {
     }
 
     #[test]
+    fn test_module_wrapper_forms() {
+        for head in [
+            "export",
+            "export default",
+            "export const messages =",
+            "export let messages =",
+        ] {
+            let code = format!("{head} {{\n\ta: \"x\"\n}};\n");
+            let mut parser = setup_parser();
+            let tree = parser.parse(&code, None).expect("Failed to parse");
+            assert!(!tree.root_node().has_error(), "unexpected error for: {head}");
+            let sexp = tree.root_node().to_sexp();
+            assert!(sexp.starts_with("(source_file (module_start"), "{head}: {sexp}");
+            assert!(sexp.ends_with("(module_end))"), "{head}: {sexp}");
+        }
+    }
+
+    #[test]
+    fn test_unsupported_module_wrappers_report_errors() {
+        let mut parser = setup_parser();
+        for head in ["export foo", "export var messages =", "export const =", "export const messages"] {
+            let code = format!("{head} {{\n\ta: \"x\"\n}};\n");
+            let tree = parser.parse(&code, None).expect("Failed to parse");
+            assert!(tree.root_node().has_error(), "expected an error for: {head}");
+        }
+    }
+
+    #[test]
+    fn test_json_wrapper() {
+        let code = "{\n\t\"a\": \"x\",\n\t\"b\": \"{n}\"\n}\n";
+        assert_eq!(
+            sexp(code),
+            "(source_file (module_start) \
+             (resource (key (quoted_string)) (value (quoted_string))) \
+             (resource (key (quoted_string)) (value (quoted_string (placeholder (identifier))))) \
+             (module_end))"
+        );
+    }
+
+    #[test]
     fn test_invalid_inputs_report_errors() {
         let mut parser = setup_parser();
         for code in [
@@ -431,6 +471,17 @@ mod tests {
     fn test_fixture_parses_without_errors() {
         let mut parser = setup_parser();
         let code = include_str!("../../test/fixtures/messages.mf.js");
+        let tree = parser.parse(code, None).expect("Failed to parse");
+        assert!(!tree.root_node().has_error());
+        let sexp = tree.root_node().to_sexp();
+        assert!(sexp.starts_with("(source_file (module_start)"));
+        assert_eq!(sexp.matches("(resource ").count(), 4);
+    }
+
+    #[test]
+    fn test_json_fixture_parses_without_errors() {
+        let mut parser = setup_parser();
+        let code = include_str!("../../test/fixtures/messages.mf.json");
         let tree = parser.parse(code, None).expect("Failed to parse");
         assert!(!tree.root_node().has_error());
         let sexp = tree.root_node().to_sexp();

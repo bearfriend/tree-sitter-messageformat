@@ -1,0 +1,8 @@
+{
+// <- punctuation.bracket
+"a": "x {n}"
+// <- property
+//   ^ string
+//       ^ variable
+}
+// <- punctuation.bracket

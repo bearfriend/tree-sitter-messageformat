@@ -38,6 +38,38 @@ test("parses the export default wrapper and self-closing tags", () => {
   );
 });
 
+test("parses every supported module wrapper", () => {
+  for (const head of [
+    "export",
+    "export default",
+    "export const messages =",
+    "export let messages =",
+  ]) {
+    const tree = parse(`${head} {\n\ta: "x"\n};\n`);
+    assert.strictEqual(tree.rootNode.hasError, false, head);
+    assert.deepStrictEqual(
+      tree.rootNode.children.map((c) => c.type),
+      ["module_start", "resource", "module_end"],
+      head
+    );
+  }
+});
+
+test("rejects unsupported module wrappers", () => {
+  for (const head of ["export foo", "export var messages =", "export const =", "export const messages"]) {
+    assert.strictEqual(parse(`${head} {\n\ta: "x"\n};\n`).rootNode.hasError, true, head);
+  }
+});
+
+test("parses a JSON object wrapper", () => {
+  const tree = parse('{\n\t"a": "x<br/>y",\n\t"b": "{n}"\n}\n');
+  assert.strictEqual(tree.rootNode.hasError, false);
+  assert.deepStrictEqual(
+    tree.rootNode.children.map((c) => c.type),
+    ["module_start", "resource", "resource", "module_end"]
+  );
+});
+
 test("reports errors for invalid input", () => {
   for (const source of ['a: "unterminated', 'a: "{n, plural, one x}"', "a: unquoted"]) {
     assert.strictEqual(parse(source).rootNode.hasError, true, source);

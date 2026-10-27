@@ -1,0 +1,99 @@
+================================================================================
+JSON object
+================================================================================
+
+{
+	"a": "b {c}",
+	"b": "x"
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (quoted_string
+        (placeholder
+          (identifier)))))
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (quoted_string)))
+  (module_end))
+
+================================================================================
+JSON empty object
+================================================================================
+
+{}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (module_end))
+
+================================================================================
+JSON escaped quotes and tags
+================================================================================
+
+{
+	"a": "She said \"hi\" to <b>{name}</b>"
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (quoted_string
+        (tag
+          (identifier))
+        (placeholder
+          (identifier))
+        (tag
+          (identifier)))))
+  (module_end))
+
+================================================================================
+JSON plural
+================================================================================
+
+{
+	"guests": "{count, plural, =0 {No guests} one {# guest} other {# guests}}"
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_start)
+  (resource
+    (key
+      (quoted_string))
+    (value
+      (quoted_string
+        (complex_message
+          (selector
+            (identifier)
+            (plural)
+            (plural_rules
+              (plural_case
+                (plural_key
+                  (number))
+                (plural_case_body))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))
+              (plural_case
+                (plural_key)
+                (plural_case_body
+                  (pound_placeholder)))))))))
+  (module_end))

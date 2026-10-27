@@ -1,0 +1,8 @@
+export const messages = {
+// <- keyword
+//     ^ keyword
+//           ^ variable
+//                    ^ operator
+//                      ^ punctuation.bracket
+a: "x"
+};
